@@ -14,8 +14,7 @@ val;
 if (!rlink.initialise (ROBOT_NUM)) {
 // setup the link
 cout << "Cannot initialise link" << endl;
-rlink.print_errs("
-");
+rlink.print_errs("	");
 return -1;
 }
 val = rlink.request (TEST_INSTRUCTION);

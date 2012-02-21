@@ -2,16 +2,9 @@
 using namespace std;
 #include <robot_instr.h>
 #include <robot_link.h>
+#include "comms.h"
 
 #define ROBOT_NUM 24
-
-class Commlink {
-	robot_link rlink; // datatype for the robot link
-	int val; // data from microprocessor
-
-  public:
-    int init ();
-  } Comms;
 
 int Commlink::init ()
 {
@@ -21,7 +14,6 @@ int Commlink::init ()
 	if (!rlink.initialise (ROBOT_NUM)) { // setup the link
 	#endif
 
-	{
 		cout << "Cannot initialise link" << endl;
 		rlink.print_errs(" ");
 		return -1;
@@ -46,5 +38,6 @@ int Commlink::init ()
 	cout << "Test failed (bad value returned)" << endl;
 	return -1; // error, finish
 	}
-}
+	
 
+}

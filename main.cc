@@ -5,7 +5,7 @@ using namespace std;
 int main ()
 
 {
-	Commlink Comms;
+	//global Commlink Comms;
 	if (Comms.init() != 0) {return -1;}
 	
 	while (0)

@@ -11,5 +11,9 @@ class Commlink {
 
   public:
     int init ();
+    void sendcommand(command_instruction command,int param){rlink.command(command, param);};
   } ;//Comms;
+
+
+extern Commlink Comms;
 

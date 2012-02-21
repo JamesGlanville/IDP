@@ -6,6 +6,9 @@ using namespace std;
 
 #define ROBOT_NUM 24
 
+Commlink Comms;
+
+
 int Commlink::init ()
 {
 	#ifdef __arm__

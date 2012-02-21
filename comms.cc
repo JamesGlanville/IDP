@@ -4,6 +4,9 @@ using namespace std;
 #include <robot_link.h>
 #include "comms.h"
 
+#include <stopwatch.h>
+
+
 #define ROBOT_NUM 24
 
 Commlink Comms;
@@ -11,6 +14,8 @@ Commlink Comms;
 
 int Commlink::init ()
 {
+	
+	stopwatch watch;
 	#ifdef __arm__
 	if (!rlink.initialise ()) { // setup for local hardware
 	#else
@@ -21,8 +26,13 @@ int Commlink::init ()
 		rlink.print_errs(" ");
 		return -1;
 	}
+	watch.start();
 
-	val = rlink.request (TEST_INSTRUCTION); // send test instruction
+	for (int i=0;i<1000;i++)
+	{
+		val = rlink.request (TEST_INSTRUCTION); // send test instruction
+	}
+	cout << watch.stop()<<endl;
 
 	if (val == TEST_INSTRUCTION_RESULT)
 	{

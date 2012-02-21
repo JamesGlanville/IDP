@@ -11,8 +11,10 @@ int main ()
 	Motor LMotor(1);
 		LMotor.setdir(true);
 
-	LMotor.setspeed(127);
 
+
+	LMotor.setspeed(127);
+	sleep (1);
 	while (0)
 	{
 		//poll everything

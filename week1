@@ -1,0 +1,37 @@
+1) Compiles fine. If robot turns off the program hangs. If the program is killed, the robot turns its motors off. Need to see if errors are recoverable.
+2)3038ms for 1000 command -> about 3ms per command.
+3) Familiarise yourself with cross-compilation for the microcontroller, downloading programs and
+running these.
+
+4. Familiarise yourself with the operation of the Sensor Simulator (see Appendix S.??). Verify
+that the simulator can correctly simulate the input and output of data at the addresses chosen
+for the PCF8574 chip(s) in the circuitry being developed by the electronics sub-team. Pay
+particular attention to the initialisation required to use individual bits (i.e. signals on the
+chip’s input/output pins) as inputs and hence the possibility of using some pins as inputs
+and others as outputs. Discuss with the electronics sub-team the allocation of signals to the
+individual bits in these chips and hence develop the routines to read and write the chip(s).
+5. Compare the speed of various operations, e.g. reading sensor and ADC values, using a program
+running on the workstation and one running on the microcontroller. Bear in mind that: the
+workstation processor is fast but the connection to the microcontroller is limited by bandwidth
+and traffic; whereas the microcontroller’s ARM-based processor is much slower but commands
+and requests do not need to be transferred over the wireless network. What effect does output
+to the screen, e.g. for debugging, have on the speed in each case?
+6. Calibrate the motor speed and acceleration against the values of the parameters to the motor
+and ramp commands for all the motors you intend to use (they will not necessarily be iden-
+tical). This information will be of help to the mechanical designers in determining a suitable
+wheel size. You should discuss these results with them in light of the figures they have on the
+effect of load on motor speed.
+7. Verify the operation and effect on the Status Register of the emergency stop commands
+STOP_SELECT, STOP_IF_HIGH and STOP_IF_LOW.
+8. Consider, with the Mechanics team, the effect of controller gain and line-following sensor
+position on the damping ratio and motion of the vehicle. What constraints on sensor position
+are imposed by: i) control system stability; ii) cornering and reversing; and iii) the proposed
+construction? Controller equations for a simple system are given in the Systems Design
+section D.A. The test chassis may allow you test out some of these ideas and to start to
+develop line-following code.
+9. Consider, with the rest of the team, the effects of motor dynamics and system inertia on
+stopping and starting the robot.
+10. Develop prototype line following code, and hence test out your conclusions about sensor
+positioning, using the test chassis and interface circuitry produced by the electronics team for
+the sensors.
+

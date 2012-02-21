@@ -1,3 +1,6 @@
+#ifndef COMMS_H
+#define COMMS_H
+
 #include <iostream>
 using namespace std;
 #include <robot_instr.h>
@@ -17,3 +20,4 @@ class Commlink {
 
 extern Commlink Comms;
 
+#endif

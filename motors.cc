@@ -3,6 +3,8 @@ using namespace std;
 #include "motors.h"
 
 //Lmotor = motor1, Rmotor = motor2 
+//Motor LMotor(1);
+
 
 Motor::Motor (int id) {
 	switch (id)
@@ -22,9 +24,14 @@ Motor::Motor (int id) {
 void Motor::sendspeed()
 {
 	int speed;
+	//cout << currentspeed << endl;
 	if (currentspeed >127) {currentspeed = 127;} //in case speed is set too high
+	//cout << currentspeed << endl;	
 	speed = currentspeed;
 	speed = speed bitor (dir << 7);
+	//cout << speed << endl;
+//	cout << dir;
+
 //	Comms.init();
 	Comms.sendcommand(motorid, speed);
 }

@@ -14,4 +14,5 @@ class Motor {
     void sendspeed();
     void setdir(bool newdir){dir=newdir;sendspeed();}
     void setramp(int newramp){ramptime=newramp;Comms.sendcommand(RAMP_TIME, ramptime);}
-} LMotor(1),RMotor(2);
+};// LMotor(1),RMotor(2);
+//extern Motor LMotor(1);

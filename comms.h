@@ -11,10 +11,13 @@ using namespace std;
 class Commlink {
 	robot_link rlink; // datatype for the robot link
 	int val; // data from microprocessor
+	int stat;
 
   public:
+	void getstat();
     int init ();
-    void sendcommand(command_instruction command,int param){rlink.command(command, param);};
+    int sendcommand(command_instruction command,int param){return rlink.command(command, param);}
+    int sendrequest(request_instruction command){return rlink.request(command);};
   } ;//Comms;
 
 

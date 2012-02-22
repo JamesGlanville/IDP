@@ -11,11 +11,16 @@ using namespace std;
 
 Commlink Comms;
 
+void Commlink::getstat()
+{
+	stat = sendrequest(STATUS);
+
+}
 
 int Commlink::init ()
 {
 	
-	stopwatch watch;
+	//stopwatch watch;
 	#ifdef __arm__
 	if (!rlink.initialise ()) { // setup for local hardware
 	#else
@@ -26,14 +31,14 @@ int Commlink::init ()
 		rlink.print_errs(" ");
 		return -1;
 	}
-	watch.start();
+/*	watch.start();
 
 	for (int i=0;i<1000;i++)
-	{
+	{*/
 		val = rlink.request (TEST_INSTRUCTION); // send test instruction
-	}
+/*	}
 	cout << watch.stop()<<endl;
-
+*/
 	if (val == TEST_INSTRUCTION_RESULT)
 	{
 	cout << "Test passed" << endl;

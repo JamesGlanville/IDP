@@ -5,6 +5,8 @@ using namespace std;
 //Lmotor = motor1, Rmotor = motor2 
 //Motor LMotor(1);
 
+//Motor LMotor(LMotorPin);
+
 
 Motor::Motor (int id) {
 	switch (id)

@@ -1,15 +1,16 @@
 #ifndef MOTORS_H
 #define MOTORS_H
 
+#include <iostream>
+using namespace std;
+#include "comms.h"
+//Lmotor = motor1, Rmotor = motor2 
+
 #define LMotorPin 1
 #define LMotorInvert 0 //NOT IMPLEMENTED
 #define RMotorPin 2
 #define RMotorInvert 0 //NOT IMPLEMENTED
 
-#include <iostream>
-using namespace std;
-#include "comms.h"
-//Lmotor = motor1, Rmotor = motor2 
 
 class Motor {
 	command_instruction motorid;
@@ -25,10 +26,8 @@ class Motor {
 };// LMotor(1),RMotor(2);
 //extern Motor LMotor(1);
 //Then, a trip point is setup as low value + ((high val
-
-extern Motor LMotor(LMotorPin);
-extern Motor RMotor(RMotorPin);
-
+//extern Motor LMotor(LMotorPin);
+//extern Motor RMotor(RMotorPin);
 
 
 #endif

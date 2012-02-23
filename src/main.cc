@@ -15,7 +15,6 @@ int main ()
 	//Motor LMotor(1);
 	//LMotor.setdir(true);
 
-
 /*
 	LMotor.setspeed(127);
 	
@@ -26,8 +25,6 @@ int main ()
 	//sleep (1);
 	
 	Behaviour behaviour;
-	
-	LMotor.setdir(true);    RMotor.setdir(true);
 	
 	behaviour.state=5; //line follow
 	

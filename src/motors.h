@@ -1,3 +1,11 @@
+#ifndef MOTORS_H
+#define MOTORS_H
+
+#define LMotorPin 1
+#define LMotorInvert 0 //NOT IMPLEMENTED
+#define RMotorPin 2
+#define RMotorInvert 0 //NOT IMPLEMENTED
+
 #include <iostream>
 using namespace std;
 #include "comms.h"
@@ -6,13 +14,21 @@ using namespace std;
 class Motor {
 	command_instruction motorid;
 	int ramptime; // 0 no ramping -> 255 slow ramping
-	float currentspeed;
-	bool dir; //true = forward, false = backwards
+	bool dir; //true = forward, false = backwards  WE MIGHT NEED TO REVERSE THIS FOR SIMPLICITY SO true means forwards left and rioght.
   public:
     Motor (int);
+	float currentspeed;
     void setspeed(int newspeed);
     void sendspeed();
     void setdir(bool newdir){dir=newdir;sendspeed();}
     void setramp(int newramp){ramptime=newramp;Comms.sendcommand(RAMP_TIME, ramptime);}
 };// LMotor(1),RMotor(2);
 //extern Motor LMotor(1);
+//Then, a trip point is setup as low value + ((high val
+
+extern Motor LMotor(LMotorPin);
+extern Motor RMotor(RMotorPin);
+
+
+
+#endif

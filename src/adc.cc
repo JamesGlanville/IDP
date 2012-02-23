@@ -31,5 +31,5 @@ adc::adc (int id) {
 
 int adc::getvalue()
 {
-	return Comms.sendrequest(adc_id);
+	value =  Comms.sendrequest(adc_id);
 }

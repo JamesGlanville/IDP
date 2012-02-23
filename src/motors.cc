@@ -5,7 +5,14 @@ using namespace std;
 //Lmotor = motor1, Rmotor = motor2 
 //Motor LMotor(1);
 
-//Motor LMotor(LMotorPin);
+#define LMotorPin 1
+#define LMotorInvert 0 //NOT IMPLEMENTED
+#define RMotorPin 2
+#define RMotorInvert 0 //NOT IMPLEMENTED
+
+Motor LMotor(LMotorPin);
+Motor RMotor(LMotorPin);
+
 
 
 Motor::Motor (int id) {

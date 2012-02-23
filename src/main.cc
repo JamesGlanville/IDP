@@ -31,7 +31,7 @@ int main ()
 	while (1)
 	{
 		//port1.readall();
-		LFsensor.getvalue(); RFsensor.getvalue();
+//		LFsensor.getvalue(); RFsensor.getvalue();
 		behaviour.checkstate();
 		behaviour.dostate();
 		

@@ -26,8 +26,8 @@ class Motor {
 };// LMotor(1),RMotor(2);
 //extern Motor LMotor(1);
 //Then, a trip point is setup as low value + ((high val
-//extern Motor LMotor(LMotorPin);
-//extern Motor RMotor(RMotorPin);
+extern Motor LMotor;
+extern Motor RMotor;
 
 
 #endif

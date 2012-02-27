@@ -19,8 +19,8 @@ class adc {
 };// LMotor(1),RMotor(2);
 //extern Motor LMotor(1);
 
-extern adc LFsensor;
-extern adc RFsensor;
+//extern adc LFsensor;
+//extern adc RFsensor;
 
 
 #endif

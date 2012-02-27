@@ -48,6 +48,8 @@ void Behaviour::dostate()
 	switch (state)
 	{
 		case 5:
+			port1.value = port1.value | LFsensor;
+			port1.value = port1.value | RFsensor;
 			linefollow(); break;
 	}
 }
@@ -55,13 +57,13 @@ void Behaviour::dostate()
 void Behaviour::linefollow()
 {
 //	if (abs(LFsensor.value -RFsensor.value) < LIGHTSENSORJITTER)
-	if (port1.value & 0x0 !=
+	if ((port1.value & LFsensor != 0) && (port1.value & RFsensor !=0))
 	{
 		LMotor.setspeed(127);
 		RMotor.setspeed(127);
 
 	}
-	if (LFsensor.value > RFsensor.value)
+	if (port1.value & RFsensor == 0)
 	{
 		LMotor.setspeed(127);
 		RMotor.setspeed(64);

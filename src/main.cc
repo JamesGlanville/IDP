@@ -32,6 +32,7 @@ int main ()
 	{
 		//port1.readall();
 //		LFsensor.getvalue(); RFsensor.getvalue();
+		behaviour.poll();
 		behaviour.checkstate();
 		behaviour.dostate();
 		

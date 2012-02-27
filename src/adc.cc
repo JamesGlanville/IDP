@@ -8,8 +8,8 @@ using namespace std;
 #define LFsensorPin 0
 #define RFsensorPin 1
 
-adc LFsensor(LFsensorPin);
-adc RFsensor(RFsensorPin);
+//adc LFsensor(LFsensorPin);
+//adc RFsensor(RFsensorPin);
 
 
 adc::adc (int id) {

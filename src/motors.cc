@@ -2,20 +2,12 @@
 using namespace std;
 #include "motors.h"
 
-//Lmotor = motor1, Rmotor = motor2 
-//Motor LMotor(1);
-
-//#define LMotorPin 1
-#define LMotorInvert 0 //NOT IMPLEMENTED
-//#define RMotorPin 
-#define RMotorInvert 0 //NOT IMPLEMENTED
-
-Motor LMotor(LMotorPin);
-Motor RMotor(RMotorPin);
+Motor LMotor(LMotorPin,LMotorInvert);
+Motor RMotor(RMotorPin,RMotorInvert);
 
 
 
-Motor::Motor (int id) {
+Motor::Motor (int id,bool doinvert) {
 	switch (id)
 	{
 		case 1:
@@ -27,7 +19,7 @@ Motor::Motor (int id) {
 		case 4:
 			motorid = MOTOR_4_GO;
 	}
-	
+	invert=doinvert;
 }
 
 void Motor::sendspeed()
@@ -49,4 +41,18 @@ void Motor::setspeed(int newspeed)
 {
 	currentspeed=newspeed;
 	sendspeed();
+}
+
+void Motor::setdir(bool newdir)
+{
+	if (invert == false)
+	{
+		dir=newdir;
+	}
+	else
+	{
+		dir=!newdir;
+	}
+	sendspeed();
+
 }

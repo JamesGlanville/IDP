@@ -9,13 +9,7 @@ using namespace std;
 */
 
 #define LIGHTSENSORJITTER 0.2
-/*
 
-#define LMotorPin 1
-#define LMotorInvert 0 //NOT IMPLEMENTED
-#define RMotorPin 2
-#define RMotorInvert 0 //NOT IMPLEMENTED
-*/
 #define LFsensorPin 0
 #define RFsensorPin 1
 
@@ -65,6 +59,7 @@ void Behaviour::linefollow()
 //	cout << port1.value<<endl;
 ///////////	if ((port1.value & LFsensor != 0) && (port1.value & RFsensor !=0))
 	LMotor.setdir(true);
+	RMotor.setdir(true);
 	if (port1.value == 252)
 	{
 		cout << "Straight ahead" << endl;

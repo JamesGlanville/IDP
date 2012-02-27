@@ -2,14 +2,8 @@
 using namespace std;
 #include "adc.h"
 
-//Lmotor = motor1, Rmotor = motor2 
-//Motor LMotor(1);
-
 #define LFsensorPin 0
 #define RFsensorPin 1
-
-//adc LFsensor(LFsensorPin);
-//adc RFsensor(RFsensorPin);
 
 
 adc::adc (int id) {

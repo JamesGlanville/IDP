@@ -2,9 +2,6 @@
 using namespace std;
 #include "i2c.h"
 
-//Lmotor = motor1, Rmotor = motor2 
-//Motor LMotor(1);
-
 i2c port1(7);
 
 i2c::i2c (int id) {

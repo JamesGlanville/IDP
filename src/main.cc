@@ -16,11 +16,9 @@ int main ()
 	
 	behaviour.state=5; //line follow
 	
-	i2c port1(7);
-	port1.value=255;
-	port1.writeall();
-	port1.readall();
-	cout << port1.value;
+
+	//port1.readall();
+	//cout << port1.value;
 	while (1)
 	{
 		behaviour.poll();

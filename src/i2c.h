@@ -1,16 +1,12 @@
 #ifndef I2C_H
 #define I2C_H
 
-//#define LFsensor = 1;
-//#define RFsensor = 2;
+#include <iostream>
+#include "comms.h"
+using namespace std;
+
 const int LFsensor = 1;
 const int RFsensor = 2;
-
-#include <iostream>
-using namespace std;
-#include "comms.h"
-
-//Lmotor = motor1, Rmotor = motor2 
 
 class i2c {
 	request_instruction readname;
@@ -24,10 +20,8 @@ public:
 	void readall();
 		void writeall();
 
-};// LMotor(1),RMotor(2);
-//extern Motor LMotor(1);
+};
 
 extern i2c port1;
-
 
 #endif

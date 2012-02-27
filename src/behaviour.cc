@@ -16,6 +16,9 @@ using namespace std;
 
 Behaviour::Behaviour() //init stuff
 {
+	i2c port1(7);
+	port1.value=255;
+	port1.writeall();
  /* 	LMotor = LMotor(LMotorPin);
 
 	Motor RMotor(RMotorPin);

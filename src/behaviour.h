@@ -8,12 +8,12 @@
 #include "motors.h"
 #include "adc.h"
 #include "i2c.h"
-
+/*
 #define LMotorPin 1
 #define LMotorInvert 0 //NOT IMPLEMENTED
 #define RMotorPin 2
 #define RMotorInvert 0 //NOT IMPLEMENTED
-
+*/
 class Behaviour {
 private:
  //	Motor LMotor(int a);

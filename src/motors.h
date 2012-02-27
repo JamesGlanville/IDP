@@ -8,7 +8,7 @@ using namespace std;
 
 #define LMotorPin 1
 #define LMotorInvert 0 //NOT IMPLEMENTED
-#define RMotorPin 2
+#define RMotorPin 3
 #define RMotorInvert 0 //NOT IMPLEMENTED
 
 

@@ -1,8 +1,10 @@
 #ifndef I2C_H
 #define I2C_H
 
-#define LFsensor = 0x1;
-#define RFsensor = 0x2;
+//#define LFsensor = 1;
+//#define RFsensor = 2;
+const int LFsensor = 1;
+const int RFsensor = 2;
 
 #include <iostream>
 using namespace std;

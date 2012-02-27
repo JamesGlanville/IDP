@@ -10,6 +10,11 @@ using namespace std;
 int main ()
 
 {
+	
+//	252 253 254
+
+	//cout << 252 & LFsensor ;
+	
 	//global Commlink Comms;
 	if (Comms.init() != 0) {return -1;}
 	//Motor LMotor(1);
@@ -28,15 +33,23 @@ int main ()
 	
 	behaviour.state=5; //line follow
 	
+	i2c port1(7);
+	port1.value=255;
+	port1.writeall();
+	port1.readall();
+	cout << port1.value;
 	while (1)
 	{
 		//port1.readall();
 //		LFsensor.getvalue(); RFsensor.getvalue();
-		behaviour.poll();
+
+//	port1.value
+
+	behaviour.poll();
 		behaviour.checkstate();
 		behaviour.dostate();
-		
-		
+
+
 		//cout << port1.value << endl;
 		//poll everything
 		//decide if we need to jump to next state

@@ -3,10 +3,9 @@
 
 #include <iostream>
 #include "comms.h"
+#include "config.h"
 using namespace std;
 
-const int LFsensor = 1;
-const int RFsensor = 2;
 
 class i2c {
 	request_instruction readname;

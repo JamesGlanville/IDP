@@ -2,10 +2,6 @@
 using namespace std;
 #include "adc.h"
 
-#define LFsensorPin 0
-#define RFsensorPin 1
-
-
 adc::adc (int id) {
 	switch (id)
 	{

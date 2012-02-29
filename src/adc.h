@@ -14,8 +14,4 @@ class adc {
 	int getvalue();
 };
 
-//extern adc LFsensor;
-//extern adc RFsensor;
-
-
 #endif

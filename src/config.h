@@ -9,8 +9,9 @@ using namespace std;
 #define RMotorPin 3
 #define RMotorInvert true
 
-const int LFsensor = 1;
-const int RFsensor = 2;
+const unsigned int LFsensor = 1;
+const unsigned int RFsensor = 2;
 
+#define PORT1ADDR 7
 
 #endif

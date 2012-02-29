@@ -8,24 +8,14 @@ using namespace std;
  * 5 - following line until parallel line encountered. //5 arbitrary for now
 */
 
-#define LIGHTSENSORJITTER 0.2
-
-#define LFsensorPin 0
-#define RFsensorPin 1
-
-
 Behaviour::Behaviour() //init stuff
 {
-	i2c port1(7);
+	i2c port1(PORT1ADDR);
+	//port1.value= LFsensor & RFsensor; //set pins for input
 	port1.value=255;
 	port1.writeall();
- /* 	LMotor = LMotor(LMotorPin);
 
-	Motor RMotor(RMotorPin);
-	adc LFsensor(LFsensorPin);
-	adc RFsensor(RFsensorPin);
 
-*/
 //	LMotor.setdir(true);    RMotor.setdir(true);
 }
 
@@ -63,10 +53,11 @@ void Behaviour::linefollow()
 ///////////	if ((port1.value & LFsensor != 0) && (port1.value & RFsensor !=0))
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	
+//	cout << (port1.value & LFsensor) << endl;
 	
 //	if (port1.value == 252)
-	if ((port1.value & LFsensor == 0) && (port1.value & RFsensor == 0))
+
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
 	{
 		cout << "Straight ahead" << endl;
 		LMotor.setspeed(127);
@@ -75,7 +66,7 @@ void Behaviour::linefollow()
 	}
 /////	if ((port1.value & LFsensor != 0) && (port1.value & RFsensor == 0))
 //	if (port1.value==253)
-	if ((port1.value & LFsensor == 0) && (port1.value & RFsensor == 1))
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 1))
 
 	{
 		cout << "Turn right" << endl;
@@ -86,7 +77,7 @@ void Behaviour::linefollow()
 	}
 ////////	if ((port1.value & RFsensor != 0 ) && (port1.value & LFsensor == 0))
 //	if (port1.value==254)
-	if ((port1.value & LFsensor == 1) && (port1.value & RFsensor == 0))
+	if (((port1.value & LFsensor) == 1) && ((port1.value & RFsensor) == 0))
 	{
 		cout << "Turn left" << endl;
 

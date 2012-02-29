@@ -7,6 +7,7 @@
 #include "motors.h"
 #include "adc.h"
 #include "i2c.h"
+#include "config.h"
 
 class Behaviour {
 private:

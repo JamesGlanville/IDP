@@ -63,7 +63,10 @@ void Behaviour::linefollow()
 ///////////	if ((port1.value & LFsensor != 0) && (port1.value & RFsensor !=0))
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	if (port1.value == 252)
+	
+	
+//	if (port1.value == 252)
+	if ((port1.value & LFsensor == 0) && (port1.value & RFsensor == 0))
 	{
 		cout << "Straight ahead" << endl;
 		LMotor.setspeed(127);
@@ -71,7 +74,9 @@ void Behaviour::linefollow()
 
 	}
 /////	if ((port1.value & LFsensor != 0) && (port1.value & RFsensor == 0))
-	if (port1.value==253)
+//	if (port1.value==253)
+	if ((port1.value & LFsensor == 0) && (port1.value & RFsensor == 1))
+
 	{
 		cout << "Turn right" << endl;
 
@@ -80,10 +85,8 @@ void Behaviour::linefollow()
 
 	}
 ////////	if ((port1.value & RFsensor != 0 ) && (port1.value & LFsensor == 0))
-	if (port1.value==254)
-
-
-
+//	if (port1.value==254)
+	if ((port1.value & LFsensor == 1) && (port1.value & RFsensor == 0))
 	{
 		cout << "Turn left" << endl;
 

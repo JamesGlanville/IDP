@@ -14,4 +14,7 @@ const unsigned int RFsensor = 2;
 
 #define PORT1ADDR 7
 
+#define FASTSPEED 127
+#define SLOWSPEED 64
+
 #endif

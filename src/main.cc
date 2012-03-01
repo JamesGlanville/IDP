@@ -14,7 +14,7 @@ int main ()
 
 	Behaviour behaviour;
 	
-	behaviour.state=5; //line follow
+	behaviour.state=1; //line follow
 	
 
 	//port1.readall();

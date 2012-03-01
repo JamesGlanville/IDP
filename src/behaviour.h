@@ -11,14 +11,15 @@
 
 class Behaviour {
 private:
-
+	bool traversingjunction;
   public:
 
 	int state;
 	void poll();
 	void checkstate();
 	void dostate();
-	void linefollow();
+	void junctionTojunction();
+	void pressLED();
 	Behaviour();
 
 };

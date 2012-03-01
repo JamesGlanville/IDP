@@ -75,6 +75,7 @@ void Behaviour::junctionTojunction()
 	{
 		if (traversingjunction == true)
 		{
+			traversingjunction = false;
 			state++;
 		}		
 

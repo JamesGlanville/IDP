@@ -8,6 +8,7 @@ using namespace std;
 
 
 class Motor {
+	float scale
 	command_instruction motorid;
 	bool invert;
 	int ramptime; // 0 no ramping -> 255 slow ramping

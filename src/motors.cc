@@ -2,12 +2,12 @@
 using namespace std;
 #include "motors.h"
 
-Motor LMotor(LMotorPin,LMotorInvert);
-Motor RMotor(RMotorPin,RMotorInvert);
+Motor LMotor(LMotorPin,LMotorInvert,LMotorScale);
+Motor RMotor(RMotorPin,RMotorInvert,RMotorScale);
 
 
 
-Motor::Motor (int id,bool doinvert) {
+Motor::Motor (int id,bool doinvert,float setscale) {
 	switch (id)
 	{
 		case 1:
@@ -20,6 +20,7 @@ Motor::Motor (int id,bool doinvert) {
 			motorid = MOTOR_4_GO;
 	}
 	invert=doinvert;
+	scale=setscale;
 }
 
 void Motor::sendspeed()

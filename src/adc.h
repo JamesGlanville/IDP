@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "comms.h"
+#include "config.h"
 using namespace std;
 
 

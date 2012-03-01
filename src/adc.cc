@@ -2,7 +2,7 @@
 using namespace std;
 #include "adc.h"
 
-adc distance(distanceping);
+adc distance(distancepin);
 adc ldr(ldrpin);
 adc thickness(thicknesspin);
 

@@ -31,6 +31,11 @@ const unsigned int SMEDAL = 32
 const unsigned int GMEDAL = 64
 const unsigned int pressswitch = 128
 
+//ADC:
+const unsigned int distancepin = 0
+const unsigned int ldrpin = 1
+const unsigned int thicknesspin = 2
+
 
 #define FASTSPEED 127
 #define SLOWSPEED 64

@@ -22,5 +22,6 @@ public:
 };
 
 extern i2c port1;
+extern i2c port2;
 
 #endif

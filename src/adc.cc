@@ -2,6 +2,11 @@
 using namespace std;
 #include "adc.h"
 
+adc distance(distanceping);
+adc ldr(ldrpin);
+adc thickness(thicknesspin);
+
+
 adc::adc (int id) {
 	switch (id)
 	{

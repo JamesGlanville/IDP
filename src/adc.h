@@ -14,4 +14,9 @@ class adc {
 	int getvalue();
 };
 
+extern adc distance;
+extern adc ldr;
+extern adc thickness;
+
+
 #endif

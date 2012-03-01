@@ -2,7 +2,8 @@
 using namespace std;
 #include "i2c.h"
 
-i2c port1(7);
+i2c port1(PORT1ADDR);
+i2c port2(PORT2ADDR);
 
 i2c::i2c (int id) {
 	switch (id)

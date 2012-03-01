@@ -36,17 +36,31 @@ void Behaviour::dostate()
 	switch (state)
 	{
 		case 1: //Getting to press, junctionTojunction x3
-			junctionTojunction();
-			junctionTojunction();
 			junctionTojunction(); break;
-		case 2: //PressLED
-			pressLED();
+		case 2:
+			junctionTojunction(); break;
+		case 3:
+			junctionTojunction(); break;
+		case 4: //PressLED
+			pressLED(); break;
+		case 5:
+			junctionTostand(); break;
+		case 6:
+			collectMedal(); break;
+		case 7:
+			standTojunction(); break;
 	}
 }
 
 void Behaviour::pressLED()
 {
 	cout << "LEDLEDLEDLEDLED!" << endl;
+	port2.value = port2.value | RELOAD;
+	port2.writeall();
+	delay(100);
+	port2.value = port2.value ^ RELOAD;
+	port2.writeall();
+	state++;
 }
 
 void Behaviour::junctionTojunction()
@@ -56,18 +70,19 @@ void Behaviour::junctionTojunction()
 	if (traversingjunction) {cout << "traversing" << endl;}
 //	cout << (port1.value & LFsensor) << (port1.value & RFsensor) << endl;
 	
-//	if (port1.value == 252)
 
 	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
 	{
-		traversingjunction = false;		
+		if (traversingjunction == true)
+		{
+			state++;
+		}		
 
 		cout << "Straight ahead" << endl;
 		LMotor.setspeed(127);
 		RMotor.setspeed(127);
 
 	}
-//	if (port1.value==253)
 	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
 
 	{
@@ -83,7 +98,6 @@ void Behaviour::junctionTojunction()
 			RMotor.setspeed(FASTSPEED);
 		}
 	}
-//	if (port1.value==254)
 	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
 	{
 		cout << "Turn left" << endl;

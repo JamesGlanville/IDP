@@ -2,6 +2,7 @@
 #define BEHAVIOUR_H
 
 #include <iostream>
+#include <delay.h>
 
 #include "comms.h"
 #include "motors.h"

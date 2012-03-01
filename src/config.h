@@ -6,13 +6,31 @@ using namespace std;
 
 #define LMotorPin 1
 #define LMotorInvert false
-#define RMotorPin 3
+#define RMotorPin 2
 #define RMotorInvert true
 
-const unsigned int LFsensor = 1;
-const unsigned int RFsensor = 2;
-
+//port 1:
 #define PORT1ADDR 7
+const unsigned int RFsensor = 1;
+const unsigned int LFsensor = 2;
+const unsigned int RMsensor = 4;
+const unsigned int LMsensor = 8;
+const unsigned int actuatorA = 16;
+const unsigned int actuatorB = 32;
+const unsigned int bumperA = 64;
+const unsigned int bumperB = 128;
+
+//port2
+#define PORT2ADDR 6
+const unsigned int RELOAD = 1
+const unsigned int REMOVE = 2
+const unsigned int TURNMOT = 4
+const unsigned int TURNSWITCH = 8
+const unsigned int BMEDAL = 16
+const unsigned int SMEDAL = 32
+const unsigned int GMEDAL = 64
+const unsigned int pressswitch = 128
+
 
 #define FASTSPEED 127
 #define SLOWSPEED 64

@@ -53,19 +53,22 @@ void Behaviour::junctionTojunction()
 {
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-//	cout << (port1.value & LFsensor) << endl;
+	if (traversingjunction) {cout << "traversing" << endl;}
+//	cout << (port1.value & LFsensor) << (port1.value & RFsensor) << endl;
 	
-	if (port1.value == 252)
+//	if (port1.value == 252)
 
-//	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
 	{
+		traversingjunction = false;		
+
 		cout << "Straight ahead" << endl;
 		LMotor.setspeed(127);
 		RMotor.setspeed(127);
 
 	}
-	if (port1.value==253)
-//	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 1))
+//	if (port1.value==253)
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
 
 	{
 		cout << "Turn right" << endl;
@@ -80,8 +83,8 @@ void Behaviour::junctionTojunction()
 			RMotor.setspeed(FASTSPEED);
 		}
 	}
-	if (port1.value==254)
-//	if (((port1.value & LFsensor) == 1) && ((port1.value & RFsensor) == 0))
+//	if (port1.value==254)
+	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
 	{
 		cout << "Turn left" << endl;
 		if (!traversingjunction)
@@ -96,7 +99,7 @@ void Behaviour::junctionTojunction()
 		}
 	}
 	
-	if (((port1.value & LFsensor) == 1) && ((port1.value & RFsensor) == 1))
+	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) != 0))
 	{
 		cout << "Hit perp line" << endl;
 		//need to advance until one sensor gets over line, then use opposite of normal algo.

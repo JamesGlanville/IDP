@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cmath>
 using namespace std;
 #include "behaviour.h"
@@ -28,11 +29,16 @@ void Behaviour::poll()
 
 void Behaviour::checkstate()
 {
-	//do something to jump to next state if needed.
+    //Open state file for input and read state
+    StateFile.open("state",ios::in);
+    StateFile >> state; 
+    StateFile.close();
 }
 
 void Behaviour::dostate()
 {
+    StateFile.open("state",ios::out);
+    
 	switch (state)
 	{
 		case 1: //Getting to press, junctionTojunction x3
@@ -50,6 +56,8 @@ void Behaviour::dostate()
 		case 7:
 			standTojunction(); break;
 	}
+	StateFile << state;
+	StateFile.close();
 }
 
 void Behaviour::pressLED()

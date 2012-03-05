@@ -16,6 +16,7 @@ private:
   public:
 
 	int state;
+	fstream StateFile;
 	void poll();
 	void checkstate();
 	void dostate();

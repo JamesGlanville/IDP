@@ -4,6 +4,30 @@
 using namespace std;
 #include "movement.h";
 
+void Movement::followLine()
+{
+  if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+  {
+    cout << "Straight ahead" << endl;
+    LMotor.setspeed(127);
+    RMotor.setspeed(127);
+  }
+  
+  if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+  {
+    cout << "Turn right" << endl;
+    LMotor.setspeed(FASTSPEED);
+    RMotor.setspeed(SLOWSPEED);
+  }
+  
+  if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+  {
+    cout << "Turn left" << endl;
+    LMotor.setspeed(SLOWSPEED);
+    RMotor.setspeed(FASTSPEED);
+  }  
+}
+
 void Movement::junctionToJunction()
 {
   LMotor.setdir(true);
@@ -63,5 +87,4 @@ void Movement::junctionToJunction()
 		RMotor.setspeed(127);
 		traversingjunction = true;		
 	}
-
 }

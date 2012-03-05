@@ -11,10 +11,21 @@
 #include "config.h"
 
 class Movement {
+  private:
+    void followLine();
+    void followWall():
+    void forward();
+    void reverse():
+    void stop();
 
   public:
     float position;
     void junctionToJunction();
+    void rotateOnJunction();
+    void junctionToStand();
+    void standToJunction();
+    void pressSideToPodiumSide();
+    
     
 };
 

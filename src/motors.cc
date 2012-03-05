@@ -29,7 +29,7 @@ void Motor::sendspeed()
 	//cout << currentspeed << endl;
 	if (currentspeed >127) {currentspeed = 127;} //in case speed is set too high
 	//cout << currentspeed << endl;	
-	speed = currentspeed;
+	speed = currentspeed*scale;
 	speed = speed bitor (dir << 7);
 	//cout << speed << endl;
 //	cout << dir;

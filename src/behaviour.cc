@@ -43,12 +43,12 @@ void Behaviour::dostate()
 			junctionTojunction(); break;
 		case 4: //PressLED
 			pressLED(); break;
-		case 5:
+/*		case 5:
 			junctionTostand(); break;
 		case 6:
 			collectMedal(); break;
 		case 7:
-			standTojunction(); break;
+			standTojunction(); break;*/
 	}
 }
 

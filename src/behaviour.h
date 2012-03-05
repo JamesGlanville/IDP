@@ -14,6 +14,9 @@
 class Behaviour {
 private:
 	bool traversingjunction;
+	int medals[5]; //1 - bronze, 2-silver, 3-gold, 0 - empty
+	void querymedals();
+	void flashTypeLEDs();
   public:
 
 	int state;

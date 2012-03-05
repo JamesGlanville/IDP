@@ -2,12 +2,12 @@
 using namespace std;
 #include "adc.h"
 
-adc distance(distancepin);
+adc distance(distancepin); //Sets up the three ADC pins we need.
 adc ldr(ldrpin);
 adc thickness(thicknesspin);
 
 
-adc::adc (int id) {
+adc::adc (int id) { //assigns ADC pins more neatly.
 	switch (id)
 	{
 		case 0:
@@ -30,7 +30,7 @@ adc::adc (int id) {
 	
 }
 
-int adc::getvalue()
+void adc::getvalue()
 {
-	value =  Comms.sendrequest(adc_id);
+	value =  Comms.sendrequest(adc_id); //Populates value for the pin with the true value.
 }

@@ -8,9 +8,9 @@ using namespace std;
 
 
 class Motor {
-	float scale;
+	float scale; //Hack to try and get "full speed" speed the same for all motors.
 	command_instruction motorid;
-	bool invert;
+	bool invert; //We want to make "forwards" rotation move the robot forwards.
 	int ramptime; // 0 no ramping -> 255 slow ramping
 	bool dir; //true = forward, false = backwards
   public:

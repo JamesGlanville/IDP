@@ -4,6 +4,7 @@
 #include <iostream>
 #include <delay.h>
 
+#include <fstream>
 #include "comms.h"
 #include "motors.h"
 #include "adc.h"
@@ -13,6 +14,10 @@
 class Behaviour {
 private:
 	bool traversingjunction;
+	int medals[5]; //1 - bronze, 2-silver, 3-gold, 0 - empty
+	void querymedals();
+	void flashTypeLEDs();
+	friend class Movement;
   public:
 
 	int state;
@@ -22,6 +27,9 @@ private:
 	void dostate();
 	void junctionTojunction();
 	void pressLED();
+	void junctionTostand();
+	void collectMedal();
+	void standTojunction();
 	Behaviour();
 
 };

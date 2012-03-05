@@ -12,7 +12,7 @@ class adc {
   public:
 	int value;
     adc (int id);
-	int getvalue();
+	void getvalue();
 };
 
 extern adc distance;

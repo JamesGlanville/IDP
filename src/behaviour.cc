@@ -4,25 +4,23 @@
 using namespace std;
 #include "behaviour.h"
 
-
-/* State variable:
- * 5 - following line until parallel line encountered. //5 arbitrary for now
-*/
-
 Behaviour::Behaviour() //init stuff
 {
-	i2c port1(PORT1ADDR);
-	//port1.value= LFsensor & RFsensor; //set pins for input
-	port1.value=255;
+	//i2c port1(PORT1ADDR);
+	//i2c port2(PORT2ADDR);
+	port1.value= LFsensor & RFsensor; //set pins for input
+	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
+	LMotor.setramp(0);
+	LMotor.setramp(0);
+	state=1; //line follow
 
-
-//	LMotor.setdir(true);    RMotor.setdir(true);
 }
 
 void Behaviour::poll()
 {
 	port1.readall();
+	port2.readall();
 //	cout << port1.value;
 
 }
@@ -49,12 +47,16 @@ void Behaviour::dostate()
 			junctionTojunction(); break;
 		case 4: //PressLED
 			pressLED(); break;
-/*		case 5:
+		case 5:
 			junctionTostand(); break;
 		case 6:
 			collectMedal(); break;
 		case 7:
-			standTojunction(); break;*/
+			standTojunction(); break;
+		case 8:
+			querymedals(); break;
+		case 9:
+			flashTypeLEDs(); break;
 	}
 	StateFile << state;
 	StateFile.close();
@@ -75,7 +77,7 @@ void Behaviour::junctionTojunction()
 {
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	if (traversingjunction) {cout << "traversing" << endl;}
+	if (traversingjunction) {cout << "traversing";}
 //	cout << (port1.value & LFsensor) << (port1.value & RFsensor) << endl;
 	
 
@@ -130,5 +132,41 @@ void Behaviour::junctionTojunction()
 		RMotor.setspeed(127);
 		traversingjunction = true;		
 	}
+
+}
+
+void Behaviour::junctionTostand()
+{
+		//do stuff
+		state++;
+}
+void Behaviour::collectMedal()
+{
+	int newmedaltype = 1; //always bronze for now to compile
+		//do stuff
+	for(int i=0;i<4;i++)
+	{
+		if (medals[i] == 0)
+		{
+			medals[i]=newmedaltype; break;
+		}
+	}
+}
+void Behaviour::standTojunction()
+{
+		//do stuff
+		state++;
+
+}
+void Behaviour::querymedals()
+{
+	if (medals[4] != 0){state++;}
+	else {state=4;}
+}
+
+void Behaviour::flashTypeLEDs()
+{
+		//do stuff
+		state++;
 
 }

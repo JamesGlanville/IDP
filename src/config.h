@@ -9,7 +9,7 @@ using namespace std;
 #define LMotorScale 1
 #define RMotorPin 2
 #define RMotorInvert true
-#define RMotorScale 0.85
+#define RMotorScale 0.92
 
 //port 1:
 #define PORT1ADDR 7

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <delay.h>
 
+#include <fstream>
 #include "comms.h"
 #include "motors.h"
 #include "adc.h"

@@ -6,7 +6,6 @@ using namespace std;
 
 
 /* State variable:
- * 5 - following line until parallel line encountered. //5 arbitrary for now
 */
 
 Behaviour::Behaviour() //init stuff

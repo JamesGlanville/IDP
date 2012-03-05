@@ -21,6 +21,9 @@ private:
 	void dostate();
 	void junctionTojunction();
 	void pressLED();
+	void junctionTostand();
+	void collectMedal();
+	void standTojunction();
 	Behaviour();
 
 };

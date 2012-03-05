@@ -67,7 +67,7 @@ void Behaviour::junctionTojunction()
 {
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	if (traversingjunction) {cout << "traversing" << endl;}
+	if (traversingjunction) {cout << "traversing";}
 //	cout << (port1.value & LFsensor) << (port1.value & RFsensor) << endl;
 	
 
@@ -123,4 +123,17 @@ void Behaviour::junctionTojunction()
 		traversingjunction = true;		
 	}
 
+}
+
+void Behaviour::junctionTostand()
+{
+		//do stuff
+}
+void Behaviour::collectMedal()
+{
+		//do stuff
+}
+void Behaviour::standTojunction()
+{
+		//do stuff
 }

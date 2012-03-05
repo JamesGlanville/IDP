@@ -8,13 +8,13 @@ using namespace std;
 
 
 class Motor {
-	float scale
+	float scale;
 	command_instruction motorid;
 	bool invert;
 	int ramptime; // 0 no ramping -> 255 slow ramping
 	bool dir; //true = forward, false = backwards
   public:
-    Motor (int id,bool doinvert);
+    Motor (int id,bool doinvert,float setscale);
 	float currentspeed;
     void setspeed(int newspeed);
     void sendspeed();

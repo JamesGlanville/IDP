@@ -6,10 +6,10 @@ using namespace std;
 
 #define LMotorPin 1
 #define LMotorInvert false
-#define LMotorScale 1 //implement
+#define LMotorScale 1
 #define RMotorPin 2
 #define RMotorInvert true
-#define RMotorScale 1 //implement
+#define RMotorScale 0.85
 
 //port 1:
 #define PORT1ADDR 7

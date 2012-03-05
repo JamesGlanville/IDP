@@ -17,6 +17,7 @@ private:
 	int medals[5]; //1 - bronze, 2-silver, 3-gold, 0 - empty
 	void querymedals();
 	void flashTypeLEDs();
+	friend class Movement;
   public:
 
 	int state;

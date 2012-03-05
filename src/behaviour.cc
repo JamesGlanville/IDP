@@ -13,6 +13,8 @@ Behaviour::Behaviour() //init stuff
 	port1.writeall();
 	LMotor.setramp(0);
 	LMotor.setramp(0);
+	state=1; //line follow
+
 }
 
 void Behaviour::poll()

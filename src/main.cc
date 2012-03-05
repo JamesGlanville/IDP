@@ -12,13 +12,8 @@ int main ()
 {
 	if (Comms.init() != 0) {return -1;}
 
-	Behaviour behaviour;
-	
-	behaviour.state=1; //line follow
-	
+	Behaviour behaviour; //A load of init stuff gets called on this initialise.
 
-	//port1.readall();
-	//cout << port1.value;
 	while (1)
 	{
 		behaviour.poll();

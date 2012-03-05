@@ -28,7 +28,7 @@ void Movement::followLine()
   }  
 }
 
-void Movement::junctionToJunction()
+void Movement::junctionToJunctionNew()
 {
 	LMotor.setdir(true);
   	RMotor.setdir(true);

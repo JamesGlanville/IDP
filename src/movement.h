@@ -20,7 +20,7 @@ class Movement {
 
   public:
     float position;
-    void junctionToJunction();
+    void junctionToJunctionNew();
     void rotateOnJunction();
     void junctionToStand();
     void standToJunction();

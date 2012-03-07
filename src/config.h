@@ -38,6 +38,12 @@ const unsigned int distancepin = 0;
 const unsigned int ldrpin = 1;
 const unsigned int thicknesspin = 2;
 
+//DELAYS
+
+const int RaiseClawDelay = 50;
+const int LowerClawDelay = 50;
+const int AdvanceGripperDelay = 50;
+const int RetractGripperDelay = 50;
 
 #define FASTSPEED 127
 #define SLOWSPEED 64

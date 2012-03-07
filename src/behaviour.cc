@@ -6,19 +6,23 @@ using namespace std;
 
 Behaviour::Behaviour() //init stuff
 {
-	//i2c port1(PORT1ADDR);
-	//i2c port2(PORT2ADDR);
 	port1.value= LFsensor | RFsensor; //set pins for input
 	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
 	LMotor.setramp(0);
 	LMotor.setramp(0);
-	state=1; //line follow
-	port2.value=RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL; //pins 1 at start.
+	state=1; //Start state machine at beginning. (This should really load past state from file.)
+	
+	//All output pins high by default, inputs need to be set high before reads:
+	port2.value=RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH;
 	
 	
 	//Testing new pcb, should be removed.
-	int medals[5]={1,2,3,1,2};
+	medals[0]=1;
+	medals[1]=2;
+	medals[2]=3;
+	medals[3]=1;
+	medals[4]=2;
 	flashTypeLEDs();
 	pressLED();
 	
@@ -29,7 +33,7 @@ void Behaviour::poll()
 {
 	port1.readall();
 	port2.readall();
-	distance.getvalue();
+	distancesense.getvalue();
 	ldr.getvalue();
 	thickness.getvalue();
 }
@@ -73,7 +77,7 @@ void Behaviour::dostate()
 
 void Behaviour::pressLED()
 {
-	cout << "LEDLEDLEDLEDLED!" << endl;
+	cout << "Flashing press LED." << endl;
 	port2.value &= ~RELOAD;
 	port2.writeall();
 	delay(100);
@@ -182,10 +186,13 @@ void Behaviour::flashTypeLEDs()
 			switch(medals[i])
 			{
 				case 1:
+					cout << "Flashing bronze LED." << endl;
 					port2.value &= ~BMEDAL; break;
 				case 2:
+					cout << "Flashing silver LED." << endl;
 					port2.value &= ~SMEDAL; break;
 				case 3:
+					cout << "Flashing gold LED." << endl;
 					port2.value &= ~GMEDAL;
 			}
 			port2.writeall();

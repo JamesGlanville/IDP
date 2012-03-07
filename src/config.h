@@ -31,7 +31,7 @@ const unsigned int TURNSWITCH = 8;
 const unsigned int BMEDAL = 16;
 const unsigned int SMEDAL = 32;
 const unsigned int GMEDAL = 64;
-const unsigned int pressswitch = 128;
+const unsigned int PRESSSWITCH = 128;
 
 //ADC:
 const unsigned int distancepin = 0;

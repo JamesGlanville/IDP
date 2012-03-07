@@ -26,15 +26,9 @@ Motor::Motor (int id,bool doinvert,float setscale) {
 void Motor::sendspeed()
 {
 	int speed;
-	//cout << currentspeed << endl;
 	if (currentspeed >127) {currentspeed = 127;} //in case speed is set too high
-	//cout << currentspeed << endl;	
 	speed = currentspeed*scale;
 	speed = speed bitor (dir << 7);
-	//cout << speed << endl;
-//	cout << dir;
-
-//	Comms.init();
 	Comms.sendcommand(motorid, speed);
 }
 

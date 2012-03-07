@@ -18,6 +18,8 @@ private:
 	void querymedals();
 	void flashTypeLEDs();
 	friend class Movement;
+	void areMedalsDone();
+	void isMedalTypeDone();
   public:
 	int standtype; //Which stand are we at? 0 if we're not.
 	int state;

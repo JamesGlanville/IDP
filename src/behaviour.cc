@@ -88,9 +88,43 @@ void Behaviour::dostate()
 			junctionTostand(); break;
 		case 14:
 			depositMedal(); break;
+		case 15:
+			standTojunction(); break;
+		case 16:
+			removeLED(); break;
+		case 17:
+			isMedalTypeDone(); break;
+		case 18:
+			rotateOnJunction(RIGHT); break;
+		case 19:
+			areMedalsDone(); break;
+		case 20:
+			break; //We need to go back to the start box.
 	}
 	StateFile << state;
 	StateFile.close();
+}
+
+void Behaviour::areMedalsDone()
+{
+	bool done=true;
+	for (int i=0;i<5;i++)
+	{
+		if (medals[i] != 0) {done=false;}
+	}
+	if(done) {state++;} //Done with all the medals;
+	else{state=11;} //Next stand.
+}
+
+void Behaviour::isMedalTypeDone()
+{
+	bool done=true;
+	for (int i=0;i<5;i++)
+	{
+		if (medals[i] == standtype) {done=false;}
+	}
+	if(done) {state=18;} //Done all of that type.
+	else {state=13;}
 }
 
 void Behaviour::rotateOnJunction(int dir)
@@ -103,7 +137,15 @@ void Behaviour::pressSideToPodiumSide()
 }
 void Behaviour::depositMedal()
 {
-	//Do something.
+	for(int i=0;i<5;i++)
+	{
+		if (medals[i] == standtype)
+		{
+			//Do something. Then set medals[i] to 0.
+			//rotate,deliver medal.
+			medals[i]=0;
+		}
+	}
 }
 
 void Behaviour::pressLED()
@@ -242,7 +284,6 @@ void Behaviour::flashTypeLEDs()
 			port2.value |= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
 			delay(500);
 		}
-		//do stuff
 		state++;
 
 }

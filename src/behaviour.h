@@ -10,6 +10,7 @@
 #include "adc.h"
 #include "i2c.h"
 #include "config.h"
+#include "mechanism.h"
 
 class Behaviour {
 private:

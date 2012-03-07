@@ -245,7 +245,7 @@ void Behaviour::collectMedal()
 	{
 		if (medals[i] == 0)
 		{
-			medals[i]=mech.readMedalType; break;
+			medals[i]=mech.readMedalType(); break;
 		}
 	}
 }

@@ -21,14 +21,16 @@ class Mechanism
 		void rotateTurntable(int medal);
 		void raiseClaw();
 		void lowerClaw();
-		void AdvanceGripper();
+		void advanceGripper();
 		void retractGripper();
-		void readMedalType();
 
 	public:
 		int collectMedal();
+		int readMedalType();
 
 		void depositMedal(int medal);
-}
+};
 
 extern Mechanism mech;
+
+#endif

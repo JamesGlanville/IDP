@@ -41,7 +41,7 @@ const unsigned int thicknesspin = 2;
 //ADC Decision Values
 
 const unsigned int LowerBoundLDR = 100;
-const unsigned int UppperBoundLDR = 200;
+const unsigned int UpperBoundLDR = 200;
 
 //DELAYS
 

@@ -5,15 +5,15 @@ using namespace std;
 
 #include "mechanism.h"
 
-Mechanism mech();
+Mechanism mech;
 
 
-void advanceTurntable()
+void Mechanism::advanceTurntable()
 {
 	//Do something with I2C
 }
 
-void rotateTurntable(int select)
+void Mechanism::rotateTurntable(int select)
 {
 	while(select != turntablePosition)
 	{
@@ -37,16 +37,16 @@ void Mechanism::lowerClaw()
 
 void Mechanism::advanceGripper()
 {
-	port1.value = port1.value | actuatorB //Turn actuator on
+	port1.value = port1.value | actuatorB; //Turn actuator on
 	port1.writeall();
 	delay(AdvanceGripperDelay);
 }
 
-void Mechanism::retractClaw()
+void Mechanism::retractGripper()
 {
-	port1.value = port1.value ^ actuatorB //Turn actuator off
+	port1.value = port1.value ^ actuatorB; //Turn actuator off
 	port1.writeall();
-	delay(RetractGripperDelay();
+	delay(RetractGripperDelay);
 }
 
 int Mechanism::readMedalType()

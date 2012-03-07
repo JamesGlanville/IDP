@@ -29,8 +29,9 @@ void Behaviour::poll()
 {
 	port1.readall();
 	port2.readall();
-//	cout << port1.value;
-
+	distance.getvalue();
+	ldr.getvalue();
+	thickness.getvalue();
 }
 
 void Behaviour::checkstate()

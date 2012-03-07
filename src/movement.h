@@ -13,9 +13,9 @@
 class Movement {
   private:
     void followLine();
-    void followWall():
+    void followWall();
     void forward();
-    void reverse():
+    void reverse();
     void stop();
 
   public:

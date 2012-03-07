@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cmath>
 using namespace std;
-#include "movement.h";
+#include "movement.h"
 
 void Movement::followLine()
 {
@@ -28,6 +28,7 @@ void Movement::followLine()
   }  
 }
 
+/*
 void Movement::junctionToJunctionNew()
 {
 	LMotor.setdir(true);
@@ -37,12 +38,12 @@ void Movement::junctionToJunctionNew()
   	LMotor.setspeed(127);
   	RMotor.setspeed(127);
   
-  	while( /* On junction  */)
+ 	while( On junction  )
   	{
     	//Check off junction
   	}
   
-	while(/* On Line */)
+	while( On Line )
 	{
 		followLine();
 		//Check if hit junction
@@ -51,3 +52,4 @@ void Movement::junctionToJunctionNew()
 	LMotor.setspeed(0);
 	RMotor.setspeed(0);
 }
+*/

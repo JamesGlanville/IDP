@@ -8,7 +8,7 @@ Behaviour::Behaviour() //init stuff
 {
 	//i2c port1(PORT1ADDR);
 	//i2c port2(PORT2ADDR);
-	port1.value= LFsensor & RFsensor; //set pins for input
+	port1.value= LFsensor | RFsensor; //set pins for input
 	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
 	LMotor.setramp(0);

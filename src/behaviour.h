@@ -19,7 +19,7 @@ private:
 	void flashTypeLEDs();
 	friend class Movement;
   public:
-
+	int standtype; //Which stand are we at? 0 if we're not.
 	int state;
 	fstream StateFile;
 	void poll();

@@ -31,6 +31,9 @@ private:
 	void junctionTostand();
 	void collectMedal();
 	void standTojunction();
+	void pressSideToPodiumSide();
+	void rotateOnJunction(int dir);
+	void depositMedal();
 	Behaviour();
 
 };

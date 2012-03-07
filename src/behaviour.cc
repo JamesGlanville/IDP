@@ -77,7 +77,7 @@ void Behaviour::dostate()
 			querymedals(); break;
 		case 9:
 			flashTypeLEDs(); break;
-/*		case 10:
+		case 10:
 			pressSideToPodiumSide(); break;
 		case 11:
 			junctionTojunction(); break;
@@ -87,10 +87,23 @@ void Behaviour::dostate()
 		case 13:
 			junctionTostand(); break;
 		case 14:
-			depositMedal(); break;*/
+			depositMedal(); break;
 	}
 	StateFile << state;
 	StateFile.close();
+}
+
+void Behaviour::rotateOnJunction(int dir)
+{
+	//Do something.
+}
+void Behaviour::pressSideToPodiumSide()
+{
+	//Do something.
+}
+void Behaviour::depositMedal()
+{
+	//Do something.
 }
 
 void Behaviour::pressLED()

@@ -10,11 +10,26 @@ Mechanism mech;
 
 void Mechanism::advanceTurntable()
 {
-	//Do something with I2C
+	port2.value = port2.value | TURNMOT;
+	delay(InitialAdvanceDelay);
+	if((port2.value & TURNSWITCH) != 0)
+	{
+		port2.value = port2.value ^ TURNMOT;
+	}
+	if(turntablePosition!=5)
+	{
+		turntablePosition++;
+	}
+	else
+	{
+		turntablePosition = 1;
+	}
+
 }
 
 void Mechanism::rotateTurntable(int select)
 {
+	//Keep rotating the turntable until it matches the select position
 	while(select != turntablePosition)
 	{
 		advanceTurntable();

@@ -50,6 +50,8 @@ const int LowerClawDelay = 50;
 const int AdvanceGripperDelay = 50;
 const int RetractGripperDelay = 50;
 
+const int InitialAdvanceDelay = 20; //Initial turntable advance delay to get off the switch
+
 #define FASTSPEED 127
 #define SLOWSPEED 64
 

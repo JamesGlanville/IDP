@@ -42,4 +42,6 @@ const unsigned int thicknesspin = 2;
 #define FASTSPEED 127
 #define SLOWSPEED 64
 
+#define MEDALLEDTIME 800 //ms to turn medal indicator leds on for.
+
 #endif

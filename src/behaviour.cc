@@ -56,7 +56,7 @@ void Behaviour::dostate()
 		case 8:
 			querymedals(); break;
 		case 9:
-			flashTypeLEDs(); break;
+			flashTypeLEDs();
 	}
 	StateFile << state;
 	StateFile.close();
@@ -166,6 +166,24 @@ void Behaviour::querymedals()
 
 void Behaviour::flashTypeLEDs()
 {
+		port2.value &= ~(BMEDAL|SMEDAL|GMEDAL); //clears the 3 led bits.
+		port2.writeall();
+		for (int i=0;i<5; i++)
+		{
+			switch(medals[i])
+			{
+				case 1:
+					port2.value |= BMEDAL; break;
+				case 2:
+					port2.value |= SMEDAL; break;
+				case 3:
+					port2.value |= GMEDAL;
+			}
+			port2.writeall();
+			delay(MEDALLEDTIME);
+			port2.value &= ~(BMEDAL|SMEDAL|GMEDAL); //clears the 3 led bits.
+			delay(500);
+		}
 		//do stuff
 		state++;
 

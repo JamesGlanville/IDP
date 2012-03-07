@@ -104,6 +104,17 @@ void Behaviour::pressLED()
 	state++;
 }
 
+void Behaviour::removeLED()
+{
+	cout << "Flashing remove LED." << endl;
+	port2.value &= ~REMOVE;
+	port2.writeall();
+	delay(100);
+	port2.value | REMOVE;
+	port2.writeall();
+	state++;
+}
+
 void Behaviour::junctionTojunction()
 {
 	LMotor.setdir(true);

@@ -27,6 +27,7 @@ private:
 	void dostate();
 	void junctionTojunction();
 	void pressLED();
+	void removeLED();
 	void junctionTostand();
 	void collectMedal();
 	void standTojunction();

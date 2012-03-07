@@ -5,6 +5,9 @@ using namespace std;
 
 #include "mechanism.h"
 
+Mechanism mech();
+
+
 void advanceTurntable()
 {
 	port2.value = port2.value | TURNMOT;

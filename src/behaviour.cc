@@ -153,7 +153,7 @@ void Behaviour::collectMedal()
 {
 	int newmedaltype = 1; //always bronze for now to compile
 		//do stuff
-	for(int i=0;i<4;i++)
+	for(int i=0;i<4;i++) //Finds lowest index to store new medal type in, when last one is filled new state will begin.
 	{
 		if (medals[i] == 0)
 		{

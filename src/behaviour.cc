@@ -13,8 +13,15 @@ Behaviour::Behaviour() //init stuff
 	LMotor.setramp(0);
 	state=1; //Start state machine at beginning. (This should really load past state from file.)
 	
+//	port2.value=255;
+//	port2.writeall();
+	
+	
+	
 	//All output pins high by default, inputs need to be set high before reads:
-	port2.value=RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH;
+	port2.value=255;//RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH; (same but longer)
+	port2.writeall();
+//	delay(1000000);
 	
 	
 	//Testing new pcb, should be removed.
@@ -69,7 +76,18 @@ void Behaviour::dostate()
 		case 8:
 			querymedals(); break;
 		case 9:
-			flashTypeLEDs();
+			flashTypeLEDs(); break;
+/*		case 10:
+			pressSideToPodiumSide(); break;
+		case 11:
+			junctionTojunction(); break;
+		case 12:
+			rotateOnJunction(LEFT); break;
+			standtype++; //If we haven't been to a stand yet, set to 1
+		case 13:
+			junctionTostand(); break;
+		case 14:
+			depositMedal(); break;*/
 	}
 	StateFile << state;
 	StateFile.close();
@@ -82,6 +100,17 @@ void Behaviour::pressLED()
 	port2.writeall();
 	delay(100);
 	port2.value | RELOAD;
+	port2.writeall();
+	state++;
+}
+
+void Behaviour::removeLED()
+{
+	cout << "Flashing remove LED." << endl;
+	port2.value &= ~REMOVE;
+	port2.writeall();
+	delay(100);
+	port2.value | REMOVE;
 	port2.writeall();
 	state++;
 }
@@ -179,7 +208,7 @@ void Behaviour::querymedals()
 
 void Behaviour::flashTypeLEDs()
 {
-		port2.value &= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
+		port2.value |= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
 		port2.writeall();
 		for (int i=0;i<5; i++)
 		{
@@ -197,7 +226,7 @@ void Behaviour::flashTypeLEDs()
 			}
 			port2.writeall();
 			delay(MEDALLEDTIME);
-			port2.value &= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
+			port2.value |= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
 			delay(500);
 		}
 		//do stuff

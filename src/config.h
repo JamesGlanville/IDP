@@ -50,4 +50,9 @@ const int RetractGripperDelay = 50;
 
 #define MEDALLEDTIME 800 //ms to turn medal indicator leds on for.
 
+#define LEFT 0 //Really anticlockwise when viewed from top.
+#define RIGHT 1
+
+//int standtypeorder[]={1,2,3}; //1 - bronze, 2 - silver, 3 - gold
+
 #endif

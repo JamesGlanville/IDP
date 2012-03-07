@@ -14,7 +14,9 @@
 class Mechanism
 {
 	private:
+		int turntablePosition;
 		bool pressOpen;
+
 		void advanceTurntable();
 		void rotateTurntable(int medal);
 		void raiseClaw();
@@ -25,6 +27,7 @@ class Mechanism
 
 	public:
 		int collectMedal();
+
 		void depositMedal(int medal);
 }
 

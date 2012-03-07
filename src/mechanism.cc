@@ -10,9 +10,12 @@ void advanceTurntable()
 	//Do something with I2C
 }
 
-void rotateTurntable(int)
+void rotateTurntable(int select)
 {
-	//Do something else with I2C
+	while(select != turntablePosition)
+	{
+		advanceTurntable();
+	}
 }
 
 void Mechanism::raiseClaw()
@@ -45,8 +48,17 @@ void Mechanism::retractClaw()
 
 int Mechanism::readMedalType()
 {
-	//Do something with ADC
-	//Then decide type and return type int
+	if(ldr.value < LowerBoundLDR)
+	{
+		int type = 0;
+	}
+	else if(ldr.value > UpperBoundLDR)
+	{
+		int type = 2;
+	}
+	else{
+		int type = 1;
+	}
 }
 
 int Mechanism::collectMedal()

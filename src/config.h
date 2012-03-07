@@ -38,6 +38,11 @@ const unsigned int distancepin = 0;
 const unsigned int ldrpin = 1;
 const unsigned int thicknesspin = 2;
 
+//ADC Decision Values
+
+const unsigned int LowerBoundLDR = 100;
+const unsigned int UppperBoundLDR = 200;
+
 //DELAYS
 
 const int RaiseClawDelay = 50;

@@ -17,7 +17,8 @@ public:
 	i2c(int id);
 	int value;
 	void readall();
-		void writeall();
+	void writeall();
+	void debounce();
 
 };
 

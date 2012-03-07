@@ -31,3 +31,4 @@ class Mechanism
 		void depositMedal(int medal);
 }
 
+extern Mechanism mech;

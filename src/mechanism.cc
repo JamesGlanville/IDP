@@ -5,6 +5,9 @@ using namespace std;
 
 #include "mechanism.h"
 
+Mechanism mech();
+
+
 void advanceTurntable()
 {
 	//Do something with I2C

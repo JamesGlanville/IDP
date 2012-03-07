@@ -48,3 +48,8 @@ void i2c::writeall()
 	Comms.sendcommand(writename, value);
 
 }
+
+void i2c::debounce()
+{
+	
+}

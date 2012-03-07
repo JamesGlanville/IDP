@@ -14,6 +14,14 @@ Behaviour::Behaviour() //init stuff
 	LMotor.setramp(0);
 	LMotor.setramp(0);
 	state=1; //line follow
+	port2.value=RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL; //pins 1 at start.
+	
+	
+	//Testing new pcb, should be removed.
+	int medals[5]={1,2,3,1,2};
+	flashTypeLEDs();
+	pressLED();
+	
 
 }
 
@@ -65,10 +73,10 @@ void Behaviour::dostate()
 void Behaviour::pressLED()
 {
 	cout << "LEDLEDLEDLEDLED!" << endl;
-	port2.value = port2.value | RELOAD;
+	port2.value &= ~RELOAD;
 	port2.writeall();
 	delay(100);
-	port2.value = port2.value ^ RELOAD;
+	port2.value | RELOAD;
 	port2.writeall();
 	state++;
 }
@@ -166,22 +174,22 @@ void Behaviour::querymedals()
 
 void Behaviour::flashTypeLEDs()
 {
-		port2.value &= ~(BMEDAL|SMEDAL|GMEDAL); //clears the 3 led bits.
+		port2.value &= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
 		port2.writeall();
 		for (int i=0;i<5; i++)
 		{
 			switch(medals[i])
 			{
 				case 1:
-					port2.value |= BMEDAL; break;
+					port2.value &= ~BMEDAL; break;
 				case 2:
-					port2.value |= SMEDAL; break;
+					port2.value &= ~SMEDAL; break;
 				case 3:
-					port2.value |= GMEDAL;
+					port2.value &= ~GMEDAL;
 			}
 			port2.writeall();
 			delay(MEDALLEDTIME);
-			port2.value &= ~(BMEDAL|SMEDAL|GMEDAL); //clears the 3 led bits.
+			port2.value &= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
 			delay(500);
 		}
 		//do stuff

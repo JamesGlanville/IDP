@@ -2,7 +2,7 @@
 using namespace std;
 #include "adc.h"
 
-adc distance(distancepin); //Sets up the three ADC pins we need.
+adc distancesense(distancepin); //Sets up the three ADC pins we need.
 adc ldr(ldrpin);
 adc thickness(thicknesspin);
 

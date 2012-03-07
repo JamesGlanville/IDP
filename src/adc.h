@@ -15,7 +15,7 @@ class adc {
 	void getvalue();
 };
 
-extern adc distance;
+extern adc distancesense;
 extern adc ldr;
 extern adc thickness;
 

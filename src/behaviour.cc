@@ -6,14 +6,26 @@ using namespace std;
 
 Behaviour::Behaviour() //init stuff
 {
-	//i2c port1(PORT1ADDR);
-	//i2c port2(PORT2ADDR);
 	port1.value= LFsensor | RFsensor; //set pins for input
 	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
 	LMotor.setramp(0);
 	LMotor.setramp(0);
-	state=1; //line follow
+	state=1; //Start state machine at beginning. (This should really load past state from file.)
+	
+	//All output pins high by default, inputs need to be set high before reads:
+	port2.value=RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH;
+	
+	
+	//Testing new pcb, should be removed.
+	medals[0]=1;
+	medals[1]=2;
+	medals[2]=3;
+	medals[3]=1;
+	medals[4]=2;
+	flashTypeLEDs();
+	pressLED();
+	
 
 }
 
@@ -21,8 +33,9 @@ void Behaviour::poll()
 {
 	port1.readall();
 	port2.readall();
-//	cout << port1.value;
-
+	distancesense.getvalue();
+	ldr.getvalue();
+	thickness.getvalue();
 }
 
 void Behaviour::checkstate()
@@ -64,11 +77,11 @@ void Behaviour::dostate()
 
 void Behaviour::pressLED()
 {
-	cout << "LEDLEDLEDLEDLED!" << endl;
-	port2.value = port2.value | RELOAD;
+	cout << "Flashing press LED." << endl;
+	port2.value &= ~RELOAD;
 	port2.writeall();
 	delay(100);
-	port2.value = port2.value ^ RELOAD;
+	port2.value | RELOAD;
 	port2.writeall();
 	state++;
 }
@@ -144,7 +157,7 @@ void Behaviour::collectMedal()
 {
 	int newmedaltype = 1; //always bronze for now to compile
 		//do stuff
-	for(int i=0;i<4;i++)
+	for(int i=0;i<4;i++) //Finds lowest index to store new medal type in, when last one is filled new state will begin.
 	{
 		if (medals[i] == 0)
 		{
@@ -166,22 +179,25 @@ void Behaviour::querymedals()
 
 void Behaviour::flashTypeLEDs()
 {
-		port2.value &= ~(BMEDAL|SMEDAL|GMEDAL); //clears the 3 led bits.
+		port2.value &= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
 		port2.writeall();
 		for (int i=0;i<5; i++)
 		{
 			switch(medals[i])
 			{
 				case 1:
-					port2.value |= BMEDAL; break;
+					cout << "Flashing bronze LED." << endl;
+					port2.value &= ~BMEDAL; break;
 				case 2:
-					port2.value |= SMEDAL; break;
+					cout << "Flashing silver LED." << endl;
+					port2.value &= ~SMEDAL; break;
 				case 3:
-					port2.value |= GMEDAL;
+					cout << "Flashing gold LED." << endl;
+					port2.value &= ~GMEDAL;
 			}
 			port2.writeall();
 			delay(MEDALLEDTIME);
-			port2.value &= ~(BMEDAL|SMEDAL|GMEDAL); //clears the 3 led bits.
+			port2.value &= BMEDAL|SMEDAL|GMEDAL; //clears the 3 led bits.
 			delay(500);
 		}
 		//do stuff

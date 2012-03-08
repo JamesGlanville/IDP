@@ -299,16 +299,17 @@ void Behaviour::junctionTojunction()
 
 void Behaviour::junctionTostand()
 {
+	bool atStand;
 	LMotor.setdir(true);
 	RMotor.setdir(true);
 
 	RMotor.setspeed(FASTSPEED);
 	LMotor.setspeed(FASTSPEED);
 
-	while(!atStand))
+	while(!atStand)
 	{
 		
-		if(((port1.value & bumperA) !=0) && (port1.value & bumperB) != 0))
+		if(((port1.value & bumperA) !=0) && ((port1.value & bumperB) != 0))
 		{
 			atStand = true;
 		}

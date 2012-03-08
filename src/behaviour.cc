@@ -52,6 +52,7 @@ void Behaviour::checkstate()
 {
     //Open state file for input and read state
     StateFile.open("state",ios::in);
+//	cout << StateFile << endl;
     StateFile >> state; 
     StateFile.close();
 }
@@ -100,9 +101,9 @@ void Behaviour::dostate()
 		case 18:
 			rotateOnJunction(RIGHT); break;
 		case 19:
-			areMedalsDone(); break;
+			areMedalsDone(); /*break;
 		case 20:
-			break; //We need to go back to the start box.
+			break; *///We need to go back to the start box.
 	}
 	StateFile << state;
 	StateFile.close();
@@ -178,7 +179,10 @@ void Behaviour::rotateOnJunction(int dir)
 }
 void Behaviour::pressSideToPodiumSide()
 {
-	//Do something.
+	rotateOnJunction(LEFT);
+	//We should now be on the curved line, pointing slightly to the wall.
+///	here's a float: distance.getdistance();
+
 }
 void Behaviour::depositMedal()
 {

@@ -16,6 +16,7 @@ int main ()
 
 	while (1)
 	{
+//		cout << "main loop" <<endl;
 		behaviour.poll();
 		behaviour.checkstate();
 		behaviour.dostate();

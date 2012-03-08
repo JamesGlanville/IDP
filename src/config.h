@@ -60,6 +60,8 @@ const int InitialAdvanceDelay = 20; //Initial turntable advance delay to get off
 #define LEFT 0 //Really anticlockwise when viewed from top.
 #define RIGHT 1
 
+#define TURNWAIT 1000
+
 //int standtypeorder[]={1,2,3}; //1 - bronze, 2 - silver, 3 - gold
 
 #endif

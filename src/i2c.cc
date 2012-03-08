@@ -40,12 +40,14 @@ i2c::i2c (int id) {
 void i2c::readall() 
 {
 	value = Comms.sendrequest(readname);
+//	if (value!=0) {cout << "I2C read error " << value << endl;}
 }
 
 void i2c::writeall() 
 {
 	//value = rlink.request (writename,value);
 	Comms.sendcommand(writename, value);
+//	if (value!=0) {cout << "I2C read error " << value << endl;}
 
 }
 

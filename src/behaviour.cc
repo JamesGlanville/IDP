@@ -3,6 +3,7 @@
 #include <cmath>
 using namespace std;
 #include "behaviour.h"
+#include "mechanism.h"
 
 Behaviour::Behaviour() //init stuff
 {
@@ -21,17 +22,19 @@ Behaviour::Behaviour() //init stuff
 	//All output pins high by default, inputs need to be set high before reads:
 	port2.value=255;//RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH; (same but longer)
 	port2.writeall();
+//	cout << "DONE"<<endl;
 //	delay(1000000);
-	
+//	mech.raiseClaw();
+//	mech.lowerClaw();
 	
 	//Testing new pcb, should be removed.
-	medals[0]=1;
-	medals[1]=2;
-	medals[2]=3;
-	medals[3]=1;
-	medals[4]=2;
-	flashTypeLEDs();
-	pressLED();
+//	medals[0]=1;
+//	medals[1]=2;
+//	medals[2]=3;
+//	medals[3]=1;
+//	medals[4]=2;
+//	flashTypeLEDs();
+//	pressLED();
 	
 
 }
@@ -129,7 +132,49 @@ void Behaviour::isMedalTypeDone()
 
 void Behaviour::rotateOnJunction(int dir)
 {
-	//Do something.
+	if (dir == LEFT)
+	{
+		LMotor.setdir(false);
+		LMotor.setspeed(FASTSPEED);
+		RMotor.setdir(true);
+		RMotor.setspeed(FASTSPEED);
+	}
+	else
+	{
+		LMotor.setdir(true);
+		LMotor.setspeed(FASTSPEED);
+		RMotor.setdir(false);
+		RMotor.setspeed(FASTSPEED);
+	}	
+	delay(TURNWAIT);
+	if (dir == LEFT)
+	{
+		while ((port1.value & LFsensor) == 0)
+		{
+			poll();
+		}
+		while ((port1.value & LFsensor) != 0)
+		{
+			poll();
+		}	
+	}
+	if (dir == RIGHT)
+	{
+		while ((port1.value & RFsensor) == 0)
+		{
+			poll();
+		}
+		while ((port1.value & RFsensor) != 0)
+		{
+			poll();
+		}	
+	}
+	LMotor.setdir(true);
+	LMotor.setspeed(0);
+	RMotor.setdir(true);
+	RMotor.setspeed(0);
+	state++;
+
 }
 void Behaviour::pressSideToPodiumSide()
 {
@@ -156,6 +201,8 @@ void Behaviour::pressLED()
 	port2.value | RELOAD;
 	port2.writeall();
 	state++;
+	//	delay(1000000);
+
 }
 
 void Behaviour::removeLED()

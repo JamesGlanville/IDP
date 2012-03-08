@@ -34,3 +34,16 @@ void adc::getvalue()
 {
 	value =  Comms.sendrequest(adc_id); //Populates value for the pin with the true value.
 }
+
+void adc::getvoltage()
+{
+	getvalue();
+	voltage = (value/256.0)*5.0;
+}
+float adc::getdistance()
+{
+	float invdist;
+	getvoltage();
+	invdist = (voltage/3.0)*0.15;
+	return 1.0/invdist;
+}

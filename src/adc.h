@@ -11,8 +11,11 @@ class adc {
 	request_instruction adc_id;
   public:
 	int value;
+	float voltage;
     adc (int id);
 	void getvalue();
+	void getvoltage();
+	float getdistance();
 };
 
 extern adc distancesense;

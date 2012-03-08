@@ -34,8 +34,10 @@ Behaviour::Behaviour() //init stuff
 //	medals[3]=1;
 //	medals[4]=2;
 //	flashTypeLEDs();
-//	pressLED();
-	
+/*	pressLED();
+	delay(6000);
+	removeLED();
+	delay(100000000);*/
 
 }
 
@@ -182,7 +184,20 @@ void Behaviour::pressSideToPodiumSide()
 	rotateOnJunction(LEFT);
 	//We should now be on the curved line, pointing slightly to the wall.
 ///	here's a float: distance.getdistance();
-
+	LMotor.setdir(true);
+	RMotor.setdir(true);
+	RMotor.setspeed(92);
+	while(1)
+	{
+		if (distancesense.getdistance() >= 10.0)
+		{
+			LMotor.setspeed(FASTSPEED);
+		}
+		else
+		{
+			LMotor.setspeed(SLOWSPEED);
+		}
+	}
 }
 void Behaviour::depositMedal()
 {
@@ -202,7 +217,7 @@ void Behaviour::pressLED()
 	port2.value &= ~RELOAD;
 	port2.writeall();
 	delay(100);
-	port2.value | RELOAD;
+	port2.value |= RELOAD;
 	port2.writeall();
 	state++;
 	//	delay(1000000);
@@ -215,7 +230,7 @@ void Behaviour::removeLED()
 	port2.value &= ~REMOVE;
 	port2.writeall();
 	delay(100);
-	port2.value | REMOVE;
+	port2.value |= REMOVE;
 	port2.writeall();
 	state++;
 }
@@ -289,7 +304,6 @@ void Behaviour::junctionTostand()
 }
 void Behaviour::collectMedal()
 {
-
 	for(int i=0;i<4;i++) //Finds lowest index to store new medal type in, when last one is filled new state will begin.
 	{
 		if (medals[i] == 0)

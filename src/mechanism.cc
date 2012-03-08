@@ -68,14 +68,14 @@ int Mechanism::readMedalType()
 {
 	if(ldr.value < LowerBoundLDR)
 	{
-		return 0;
+		return 1;
 	}
 	else if(ldr.value > UpperBoundLDR)
 	{
-		return 2;
+		return 3;
 	}
 	else{
-		return 1;
+		return 2;
 	}
 }
 

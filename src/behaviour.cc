@@ -299,8 +299,43 @@ void Behaviour::junctionTojunction()
 
 void Behaviour::junctionTostand()
 {
-		//do stuff
-		state++;
+	LMotor.setdir(true);
+	RMotor.setdir(true);
+
+	RMotor.setspeed(FASTSPEED);
+	LMotor.setspeed(FASTSPEED);
+
+	while(!atStand))
+	{
+		
+		if(((port1.value & bumperA) !=0) && (port1.value & bumperB) != 0))
+		{
+			atStand = true;
+		}
+
+		if(((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+		{
+			cout << "Straight Ahead" << endl;
+			LMotor.setspeed(FASTSPEED);
+			LMotor.setspeed(FASTSPEED);
+		}
+
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+		{
+			cout << "Turn Right" << endl;
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(FASTSPEED);				
+		}
+		
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+		{
+			cout << "Turn Left" << endl;
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(FASTSPEED);	
+		}
+	}
+
+	state++;
 }
 void Behaviour::collectMedal()
 {
@@ -314,9 +349,14 @@ void Behaviour::collectMedal()
 }
 void Behaviour::standTojunction()
 {
-		//do stuff
-		state++;
-
+		if(medals[4] == 0)
+		{
+			state = 4;
+		}
+		else
+		{
+			state++;
+		}
 }
 void Behaviour::querymedals()
 {

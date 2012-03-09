@@ -18,22 +18,6 @@ Behaviour::Behaviour() //init stuff
 	//All output pins high by default, inputs need to be set high before reads:
 	port2.value=255;//RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH; (same but longer)
 	port2.writeall();
-
-		
-	//Test code for bumpers
-	while(1)
-	{
-		if((port1.value & bumperA) != 0)
-		{
-			cout << "Bumper A on!" << endl;
-		}
-		if((port1.value & bumperB) != 0)
-		{
-			cout << "Bumper B on!" << endl;
- 		}	
-	}
-
-
 }
 
 void Behaviour::poll()

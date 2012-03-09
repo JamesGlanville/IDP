@@ -27,7 +27,7 @@ Behaviour::Behaviour() //init stuff
 		{
 			cout << "Bumper A on!" << endl;
 		}
-		if((port.value & bumperB) != 0)
+		if((port1.value & bumperB) != 0)
 		{
 			cout << "Bumper B on!" << endl;
  		}	

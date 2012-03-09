@@ -14,30 +14,25 @@ Behaviour::Behaviour() //init stuff
 	LMotor.setramp(0);
 	state=1; //Start state machine at beginning. (This should really load past state from file.)
 	
-//	port2.value=255;
-//	port2.writeall();
-	
-	
 	
 	//All output pins high by default, inputs need to be set high before reads:
 	port2.value=255;//RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH; (same but longer)
 	port2.writeall();
-//	cout << "DONE"<<endl;
-//	delay(1000000);
-//	mech.raiseClaw();
-//	mech.lowerClaw();
-	
-	//Testing new pcb, should be removed.
-//	medals[0]=1;
-//	medals[1]=2;
-//	medals[2]=3;
-//	medals[3]=1;
-//	medals[4]=2;
-//	flashTypeLEDs();
-/*	pressLED();
-	delay(6000);
-	removeLED();
-	delay(100000000);*/
+
+		
+	//Test code for bumpers
+	while(1)
+	{
+		if((port1.value & bumperA) != 0)
+		{
+			cout << "Bumper A on!" << endl;
+		}
+		if((port.value & bumperB) != 0)
+		{
+			cout << "Bumper B on!" << endl;
+ 		}	
+	}
+
 
 }
 

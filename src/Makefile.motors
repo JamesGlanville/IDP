@@ -1,0 +1,47 @@
+# Automatically generated Makefile
+motors:  /groups/IB/idp/idp-l207/jr507/Repo/src/motors.o /groups/IB/idp/idp-l207/jr507/Repo/src/mechanism.o /groups/IB/idp/idp-l207/jr507/Repo/src/main.o /groups/IB/idp/idp-l207/jr507/Repo/src/i2c.o /groups/IB/idp/idp-l207/jr507/Repo/src/comms.o /groups/IB/idp/idp-l207/jr507/Repo/src/behaviour.o /groups/IB/idp/idp-l207/jr507/Repo/src/adc.o
+	g++  -ansi -g -L/export/teach/1BRobot -I/export/teach/1BRobot -omotors  /groups/IB/idp/idp-l207/jr507/Repo/src/motors.o /groups/IB/idp/idp-l207/jr507/Repo/src/mechanism.o /groups/IB/idp/idp-l207/jr507/Repo/src/main.o /groups/IB/idp/idp-l207/jr507/Repo/src/i2c.o /groups/IB/idp/idp-l207/jr507/Repo/src/comms.o /groups/IB/idp/idp-l207/jr507/Repo/src/behaviour.o /groups/IB/idp/idp-l207/jr507/Repo/src/adc.o  -lrobot
+	chmod g+rxw motors
+
+/groups/IB/idp/idp-l207/jr507/Repo/src/motors.o: /groups/IB/idp/idp-l207/jr507/Repo/src/motors.cc comms.h config.h motors.h
+	g++   -ansi -L/export/teach/1BRobot -I/export/teach/1BRobot -g -c /groups/IB/idp/idp-l207/jr507/Repo/src/motors.cc
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/motors.o
+
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/motors.o
+
+/groups/IB/idp/idp-l207/jr507/Repo/src/mechanism.o: /groups/IB/idp/idp-l207/jr507/Repo/src/mechanism.cc comms.h comms.h config.h motors.h comms.h config.h adc.h comms.h config.h i2c.h config.h mechanism.h
+	g++   -ansi -L/export/teach/1BRobot -I/export/teach/1BRobot -g -c /groups/IB/idp/idp-l207/jr507/Repo/src/mechanism.cc
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/mechanism.o
+
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/mechanism.o
+
+/groups/IB/idp/idp-l207/jr507/Repo/src/main.o: /groups/IB/idp/idp-l207/jr507/Repo/src/main.cc comms.h comms.h config.h motors.h comms.h config.h i2c.h comms.h config.h adc.h comms.h comms.h config.h motors.h comms.h config.h adc.h comms.h config.h i2c.h config.h comms.h comms.h config.h motors.h comms.h config.h adc.h comms.h config.h i2c.h config.h mechanism.h behaviour.h
+	g++   -ansi -L/export/teach/1BRobot -I/export/teach/1BRobot -g -c /groups/IB/idp/idp-l207/jr507/Repo/src/main.cc
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/main.o
+
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/main.o
+
+/groups/IB/idp/idp-l207/jr507/Repo/src/i2c.o: /groups/IB/idp/idp-l207/jr507/Repo/src/i2c.cc comms.h config.h i2c.h
+	g++   -ansi -L/export/teach/1BRobot -I/export/teach/1BRobot -g -c /groups/IB/idp/idp-l207/jr507/Repo/src/i2c.cc
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/i2c.o
+
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/i2c.o
+
+/groups/IB/idp/idp-l207/jr507/Repo/src/comms.o: /groups/IB/idp/idp-l207/jr507/Repo/src/comms.cc comms.h
+	g++   -ansi -L/export/teach/1BRobot -I/export/teach/1BRobot -g -c /groups/IB/idp/idp-l207/jr507/Repo/src/comms.cc
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/comms.o
+
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/comms.o
+
+/groups/IB/idp/idp-l207/jr507/Repo/src/behaviour.o: /groups/IB/idp/idp-l207/jr507/Repo/src/behaviour.cc comms.h comms.h config.h motors.h comms.h config.h adc.h comms.h config.h i2c.h config.h comms.h comms.h config.h motors.h comms.h config.h adc.h comms.h config.h i2c.h config.h mechanism.h behaviour.h comms.h comms.h config.h motors.h comms.h config.h adc.h comms.h config.h i2c.h config.h mechanism.h
+	g++   -ansi -L/export/teach/1BRobot -I/export/teach/1BRobot -g -c /groups/IB/idp/idp-l207/jr507/Repo/src/behaviour.cc
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/behaviour.o
+
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/behaviour.o
+
+/groups/IB/idp/idp-l207/jr507/Repo/src/adc.o: /groups/IB/idp/idp-l207/jr507/Repo/src/adc.cc comms.h config.h adc.h
+	g++   -ansi -L/export/teach/1BRobot -I/export/teach/1BRobot -g -c /groups/IB/idp/idp-l207/jr507/Repo/src/adc.cc
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/adc.o
+
+	chmod g+rw /groups/IB/idp/idp-l207/jr507/Repo/src/adc.o
+

@@ -10,8 +10,7 @@ Behaviour::Behaviour() //init stuff
 	port1.value= LFsensor | RFsensor|LMsensor| RMsensor; //set pins for input
 	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
-	LMotor.setramp(0);
-	LMotor.setramp(0);
+	Comms.sendcommand(RAMP_TIME,RAMPT);
 	state=1; //Start state machine at beginning. (This should really load past state from file.)
 	
 	

@@ -12,6 +12,7 @@ using namespace std;
 #define RMotorScale 0.92
 
 const unsigned int RAMPT = 50;
+const unsigned int RAMPLESS = 5; //Amount to un-ramp every loop when line following.
 
 //port 1:
 #define PORT1ADDR 7

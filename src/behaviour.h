@@ -22,6 +22,7 @@ private:
 	void areMedalsDone();
 	void isMedalTypeDone();
   public:
+	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.
 	int state;
 	fstream StateFile;

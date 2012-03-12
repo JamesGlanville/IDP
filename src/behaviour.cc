@@ -11,6 +11,7 @@ Behaviour::Behaviour() //init stuff
 	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
 	Comms.sendcommand(RAMP_TIME,RAMPT);
+	
 	state=1; //Start state machine at beginning. (This should really load past state from file.)
 	
 	
@@ -249,6 +250,7 @@ void Behaviour::removeLED()
 
 void Behaviour::junctionTojunction(bool dir)
 {
+	if(ramp>=RAMPLESS){ramp-=RAMPLESS;} // every time this gets called, we'll ramp a bit less.
 	LMotor.setdir(dir);
 	RMotor.setdir(dir);
 	if (traversingjunction) {cout << "traversing";}
@@ -261,6 +263,7 @@ void Behaviour::junctionTojunction(bool dir)
 		{
 			traversingjunction = false;
 			state++;
+			ramp = RAMPT; //get back to normal ramping for next function.
 		}		
 
 		cout << "Straight ahead" << endl;
@@ -306,6 +309,7 @@ void Behaviour::junctionTojunction(bool dir)
 		RMotor.setspeed(127);
 		traversingjunction = true;		
 	}
+	Comms.sendcommand(RAMP_TIME,ramp);
 
 }
 

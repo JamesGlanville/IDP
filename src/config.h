@@ -11,7 +11,7 @@ using namespace std;
 #define RMotorInvert false
 #define RMotorScale 0.92
 
-#define RAMPT = 127;
+#define RAMPT 127;
 
 //port 1:
 #define PORT1ADDR 7

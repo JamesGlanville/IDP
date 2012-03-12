@@ -11,7 +11,7 @@ using namespace std;
 #define RMotorInvert false
 #define RMotorScale 0.92
 
-#define RAMPT 127;
+const unsigned int RAMPT = 50;
 
 //port 1:
 #define PORT1ADDR 7
@@ -47,10 +47,10 @@ const unsigned int UpperBoundLDR = 200;
 
 //DELAYS
 
-const int RaiseClawDelay = 50;
-const int LowerClawDelay = 50;
-const int AdvanceGripperDelay = 50;
-const int RetractGripperDelay = 50;
+const int RaiseClawDelay = 500;
+const int LowerClawDelay = 500;
+const int AdvanceGripperDelay = 500;
+const int RetractGripperDelay = 500;
 
 const int InitialAdvanceDelay = 20; //Initial turntable advance delay to get off the switch
 

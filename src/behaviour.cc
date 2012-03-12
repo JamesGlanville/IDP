@@ -40,21 +40,15 @@ void Behaviour::checkstate()
 void Behaviour::dostate()
 {
     StateFile.open("state",ios::out);
-    
+    cout << "State: " << state << "  ";
 	switch (state)
 	{
 		case 1: //Getting to press, junctionTojunction x3
-			junctionTojunction(); break;
-		case 2:
-		
-		
-		
-		
-			junctionTojunction(); break;
+			junctionTojunction(true); break;
+		case 2:		
+			junctionTojunction(true); break;
 		case 3:
-					rotateOnJunction(LEFT); cout <<"go forwards" << endl; junctionTojunction(); delay(10000);break;
-
-		//	junctionTojunction(); break;
+			junctionTojunction(true); break;		
 		case 4: //PressLED
 			pressLED(); break;
 		case 5:
@@ -64,13 +58,13 @@ void Behaviour::dostate()
 		case 7:
 			standTojunction(); break;
 		case 8:
-			querymedals(); break;
+			querymedals();  break;
 		case 9:
 			flashTypeLEDs(); break;
 		case 10:
 			pressSideToPodiumSide(); break;
 		case 11:
-			junctionTojunction(); break;
+			junctionTojunction(true); break;
 		case 12:
 			rotateOnJunction(LEFT); break;
 			standtype++; //If we haven't been to a stand yet, set to 1
@@ -253,10 +247,10 @@ void Behaviour::removeLED()
 	state++;
 }
 
-void Behaviour::junctionTojunction()
+void Behaviour::junctionTojunction(bool dir)
 {
-	LMotor.setdir(true);
-	RMotor.setdir(true);
+	LMotor.setdir(dir);
+	RMotor.setdir(dir);
 	if (traversingjunction) {cout << "traversing";}
 //	cout << (port1.value & LFsensor) << (port1.value & RFsensor) << endl;
 	
@@ -332,6 +326,7 @@ void Behaviour::junctionTostand()
 		RMotor.setspeed(0);
 		LMotor.setspeed(0);
 		state++;
+		return;
 	}
 	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
 	{
@@ -362,17 +357,22 @@ void Behaviour::collectMedal()
 			medals[i]=mech.collectMedal(); break;
 		}
 	}
+	state++;
 }
 void Behaviour::standTojunction()
 {
-		if(medals[4] == 0)
+	junctionTojunction(false);
+/*		if(medals[4] == 0)
 		{
 			state = 4;
 		}
 		else
 		{
 			state++;
-		}
+		}*/
+		
+	
+		
 }
 void Behaviour::querymedals()
 {

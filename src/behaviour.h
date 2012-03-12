@@ -28,7 +28,7 @@ private:
 	void poll();
 	void checkstate();
 	void dostate();
-	void junctionTojunction();
+	void junctionTojunction(bool dir);
 	void pressLED();
 	void removeLED();
 	void junctionTostand();

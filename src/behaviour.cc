@@ -12,7 +12,7 @@ Behaviour::Behaviour() //init stuff
 	port1.writeall();
 	LMotor.setramp(0);
 	LMotor.setramp(0);
-	state=1; //Start state machine at beginning. (This should really load past state from file.)
+	state=5; // Testing junctionToStand//Start state machine at beginning. (This should really load past state from file.)
 	
 	
 	//All output pins high by default, inputs need to be set high before reads:
@@ -192,14 +192,18 @@ void Behaviour::depositMedal()
 
 void Behaviour::pressLED()
 {
+	RMotor.setspeed(0);
+	LMotor.setspeed(0);
+	cout << "STOP" << endl;
 	cout << "Flashing press LED." << endl;
 	port2.value &= ~RELOAD;
 	port2.writeall();
 	delay(100);
 	port2.value |= RELOAD;
 	port2.writeall();
+	delay(50000);
 	state++;
-	//	delay(1000000);
+		
 
 }
 
@@ -278,44 +282,41 @@ void Behaviour::junctionTojunction()
 
 void Behaviour::junctionTostand()
 {
-	bool atStand;
+	bool atStand = false;
 	LMotor.setdir(true);
 	RMotor.setdir(true);
 
 	RMotor.setspeed(FASTSPEED);
 	LMotor.setspeed(FASTSPEED);
 
-	while(!atStand)
+	cout << "Approaching Stand" << endl;
+
+	if(((port1.value & bumperA) != 0) && ((port1.value & bumperB) != 0))
 	{
-		
-		if(((port1.value & bumperA) !=0) && ((port1.value & bumperB) != 0))
-		{
-			atStand = true;
-		}
-
-		if(((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
-		{
-			cout << "Straight Ahead" << endl;
-			LMotor.setspeed(FASTSPEED);
-			LMotor.setspeed(FASTSPEED);
-		}
-
-		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
-		{
-			cout << "Turn Right" << endl;
-			LMotor.setspeed(SLOWSPEED);
-			RMotor.setspeed(FASTSPEED);				
-		}
-		
-		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
-		{
-			cout << "Turn Left" << endl;
-			LMotor.setspeed(SLOWSPEED);
-			RMotor.setspeed(FASTSPEED);	
-		}
+		cout << "At Stand" << endl;
+		RMotor.setspeed(0);
+		LMotor.setspeed(0);
+		state++;
 	}
-
-	state++;
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+	{
+		cout << "Straight ahead" << endl;
+		LMotor.setspeed(FASTSPEED);
+		RMotor.setspeed(FASTSPEED);
+	}
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+	{
+		cout << "Turn right" << endl;
+		LMotor.setspeed(FASTSPEED);
+		RMotor.setspeed(SLOWSPEED);
+	}
+	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+	{
+		cout << "Turn left" << endl;
+		LMotor.setspeed(SLOWSPEED);
+		RMotor.setspeed(FASTSPEED);
+	}
+	
 }
 void Behaviour::collectMedal()
 {

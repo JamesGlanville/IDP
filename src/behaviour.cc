@@ -112,8 +112,37 @@ void Behaviour::isMedalTypeDone()
 	else {state=13;}
 }
 
-void Behaviour::rotateOnJunction(int dir)
+void Behaviour::rotateOnJunction(int dir) // We need to move forward first
 {
+	LMotor.setdir(true);
+	LMotor.setspeed(FASTSPEED);
+	RMotor.setdir(true);
+	RMotor.setspeed(FASTSPEED);	
+	
+	while ((port1.value & LMsensor == 0) && (port1.value & RMsensor == 0))
+	{
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+		{	
+			cout << "Straight ahead" << endl;
+			LMotor.setspeed(127);
+			RMotor.setspeed(127);
+		}
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+		{
+			cout << "Turn right" << endl;
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(FASTSPEED);
+		}
+		if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+		{
+			cout << "Turn left" << endl;
+			LMotor.setspeed(FASTSPEED);
+			RMotor.setspeed(SLOWSPEED);
+		}	
+		
+		poll();
+	}
+	
 	if (dir == LEFT)
 	{
 		LMotor.setdir(false);

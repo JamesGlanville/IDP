@@ -7,12 +7,12 @@ using namespace std;
 
 Behaviour::Behaviour() //init stuff
 {
-	port1.value= LFsensor | RFsensor; //set pins for input
+	port1.value= LFsensor | RFsensor|LMsensor| RMsensor; //set pins for input
 	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
 	LMotor.setramp(0);
 	LMotor.setramp(0);
-	state=5; // Testing junctionToStand//Start state machine at beginning. (This should really load past state from file.)
+	state=1; //Start state machine at beginning. (This should really load past state from file.)
 	
 	
 	//All output pins high by default, inputs need to be set high before reads:
@@ -47,9 +47,15 @@ void Behaviour::dostate()
 		case 1: //Getting to press, junctionTojunction x3
 			junctionTojunction(); break;
 		case 2:
+		
+		
+		
+		
 			junctionTojunction(); break;
 		case 3:
-			junctionTojunction(); break;
+					rotateOnJunction(LEFT); cout <<"go forwards" << endl; junctionTojunction(); delay(10000);break;
+
+		//	junctionTojunction(); break;
 		case 4: //PressLED
 			pressLED(); break;
 		case 5:
@@ -115,34 +121,35 @@ void Behaviour::isMedalTypeDone()
 void Behaviour::rotateOnJunction(int dir) // We need to move forward first
 {
 	LMotor.setdir(true);
-	LMotor.setspeed(FASTSPEED);
+	LMotor.setspeed(0);
 	RMotor.setdir(true);
-	RMotor.setspeed(FASTSPEED);	
-	
-	while ((port1.value & LMsensor == 0) && (port1.value & RMsensor == 0))
+	RMotor.setspeed(0);	
+	delay(3000);
+	while ((((port1.value & LMsensor) == 0) || ((port1.value & RMsensor) == 0)))
 	{
 		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
 		{	
-			cout << "Straight ahead" << endl;
+			cout << "Straight aheadRRRR" << endl;
 			LMotor.setspeed(127);
 			RMotor.setspeed(127);
 		}
 		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
 		{
-			cout << "Turn right" << endl;
+			cout << "Turn rightRRRR" << endl;
 			LMotor.setspeed(SLOWSPEED);
 			RMotor.setspeed(FASTSPEED);
 		}
 		if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
 		{
-			cout << "Turn left" << endl;
+			cout << "Turn leftRRRR" << endl;
 			LMotor.setspeed(FASTSPEED);
 			RMotor.setspeed(SLOWSPEED);
 		}	
 		
 		poll();
 	}
-	
+	cout << "l:" << (port1.value & LMsensor) << "r:" << (port1.value & RMsensor) << endl;
+	//delay(3000);
 	if (dir == LEFT)
 	{
 		LMotor.setdir(false);
@@ -230,7 +237,7 @@ void Behaviour::pressLED()
 	delay(100);
 	port2.value |= RELOAD;
 	port2.writeall();
-	delay(50000);
+	delay(5000);
 	state++;
 		
 

@@ -195,9 +195,10 @@ void Behaviour::pressSideToPodiumSide()
 ///	here's a float: distance.getdistance();
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	RMotor.setspeed(92);
-	while(1)
+	if(((port1.value & LFsensor)==0) && ((port1.value & RFsensor)==0))
 	{
+		RMotor.setspeed(92);
+		
 		if (distancesense.getdistance() >= 10.0)
 		{
 			LMotor.setspeed(FASTSPEED);
@@ -207,6 +208,20 @@ void Behaviour::pressSideToPodiumSide()
 			LMotor.setspeed(SLOWSPEED);
 		}
 	}
+	
+	else
+	{
+		LMotor.setspeed(SLOWSPEED);
+		RMotor.setspeed(FASTSPEED);
+		delay(TURNWAIT);
+		state++;	// Hopefully we're in a good enough position to just trust 
+					// junctionTojunction to work. Ideally we want to change
+					// the use here of TURNWAIT to a value where we are going
+					// as parallel as possible to the line, but will hit it 
+					// a bit before we need to do anything, so junctiontojunction
+					// will straighten up. This probably won't work as written here.
+	}
+	
 }
 void Behaviour::depositMedal()
 {

@@ -55,7 +55,7 @@ void Behaviour::dostate()
 			advance(FORWARDS,100,30);	//forwards for 100ms at 30, so findline isn't already
 										//on a line
 		case 3:
-			findline(RIGHT,0); break;
+			findline(LEFT,0); break; //We're on the right side of the line.
 		case 4: //PressLED
 			flashLED(RELOAD); break;
 		case 5:
@@ -110,7 +110,7 @@ void Behaviour::advance(bool dir,int time,int speed)
 
 void Behaviour::swapsides()
 {
-	advance(FORWARDS,200,50);	//200ms at 50, want to tweak this so
+	advance(FORWARDS,800,FASTSPEED);	//200ms at 50, want to tweak this so
 								//findline gets to be roughly pointing 
 								//at the middle of the side wall.
 	findline(LEFT,0);
@@ -371,7 +371,7 @@ void Behaviour::followWall(int linestocross)
 	int msToWait = 3000; // We'll wait at least 1s (?) before using light sensor readings.
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	
+	watch.start();
 	while(linestocross > -1)
 	{
 		RMotor.setspeed(92);
@@ -385,7 +385,7 @@ void Behaviour::followWall(int linestocross)
 			LMotor.setspeed(SLOWSPEED);
 		}
 		
-		if ((port1.value & LFsensor) != 0 )
+		if ((port1.value & RFsensor) != 0 )
 		{
 			if (watch.read() <= msToWait)
 			{
@@ -394,6 +394,7 @@ void Behaviour::followWall(int linestocross)
 			}
 			else
 			{
+				cout << "Crossing line!" << endl;
 				linestocross--;
 				watch.start();
 			}
@@ -548,7 +549,36 @@ void Behaviour::collectMedal()
 }
 void Behaviour::standTojunction()
 {
-	junctionTojunction(false);		
+	LMotor.setdir(false);
+	RMotor.setdir(false);
+	//junctionTojunction(false);
+	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) != 0))
+	{
+		cout << "On junction." << endl;
+		stop();
+		advance(FORWARDS,100,SLOWSPEED); //Hopefully jiggles back off the junction.
+		state++;
+		return;
+	}
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+	{
+		cout << "Straight ahead" << endl;
+		LMotor.setspeed(127);
+		RMotor.setspeed(127);
+	}
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+	{
+		cout << "Turn right" << endl;
+		LMotor.setspeed(SLOWSPEED);
+		RMotor.setspeed(FASTSPEED);
+	}
+	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+	{
+		cout << "Turn left" << endl;
+		LMotor.setspeed(FASTSPEED);
+		RMotor.setspeed(SLOWSPEED);
+	}
+			
 }
 void Behaviour::querymedals()
 {

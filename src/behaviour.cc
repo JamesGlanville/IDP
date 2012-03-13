@@ -462,8 +462,10 @@ void Behaviour::junctionTostand()
 	LMotor.setdir(true);
 	RMotor.setdir(true);
 
-	RMotor.setspeed(FASTSPEED);
-	LMotor.setspeed(FASTSPEED);
+	RMotor.setspeed(FASTSPEED); //This shouldn't be here. It probably works only because
+	LMotor.setspeed(FASTSPEED); //poll takes so long, and the only time it would ever
+								//actually set the final speed is if both sensors are
+								//on a line.
 
 	cout << "Approaching Stand" << endl;
 

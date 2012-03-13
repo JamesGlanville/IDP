@@ -22,6 +22,8 @@ private:
 	void areMedalsDone();
 	void isMedalTypeDone();
   public:
+	void followWall(int linestocross);
+
 	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.
 	int state;

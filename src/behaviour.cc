@@ -4,6 +4,7 @@
 using namespace std;
 #include "behaviour.h"
 #include "mechanism.h"
+#include <stopwatch.h>
 
 Behaviour::Behaviour() //init stuff
 {
@@ -49,12 +50,16 @@ void Behaviour::dostate()
     cout << "State: " << state << "  ";
 	switch (state)
 	{
-		case 1: //Getting to press, junctionTojunction x3
+/*		case 1: //Getting to press, junctionTojunction x3
 			junctionTojunction(true); break;
 		case 2:		
 			junctionTojunction(true); break;
 		case 3:
-			junctionTojunction(true); break;		
+			junctionTojunction(true); break;	*/
+		case 1:
+			followWall(1); break;
+		case 2:
+			state +=2; break; // jmp
 		case 4: //PressLED
 			pressLED(); break;
 		case 5:
@@ -238,6 +243,51 @@ void Behaviour::pressSideToPodiumSide()
 					// will straighten up. This probably won't work as written here.
 	
 	
+}
+
+void Behaviour::followWall(int linestocross)
+{
+	stopwatch watch;
+
+	int msToWait = 3000; // We'll wait at least 1s (?) before using light sensor readings.
+	LMotor.setdir(true);
+	RMotor.setdir(true);
+	
+	
+	while(linestocross > -1)
+	{
+		RMotor.setspeed(92);
+		
+		if (distancesense.getdistance() >= 15.0)
+		{
+			LMotor.setspeed(FASTSPEED);
+		}
+		else
+		{
+			LMotor.setspeed(SLOWSPEED);
+		}
+		
+		if ((port1.value & LFsensor) != 0 )
+		{
+			if (watch.read <= msToWait)
+			{
+				//watch.start();
+				cout << "Repeated reading." << endl;
+			}
+			else
+			{
+				linestocross--;
+				watch.start();
+			}
+			
+		}
+		poll();
+	}
+	
+
+	LMotor.setspeed(0);
+	RMotor.setspeed(0);		
+	state++;	
 }
 void Behaviour::depositMedal()
 {

@@ -10,7 +10,7 @@ Behaviour::Behaviour() //init stuff
 {
 	//port1.value= LFsensor | RFsensor|LMsensor| RMsensor|bumperA|bumperB; //set pins for input
 	//port1.value=255; //Needs fixing from above.
-	port1.writeall();
+	//port1.writeall();
 	Comms.sendcommand(RAMP_TIME,RAMPT);
 	
 	state=1; //Start state machine at beginning. (This should really load past state from file.)
@@ -24,7 +24,7 @@ Behaviour::Behaviour() //init stuff
 
 void Behaviour::poll()
 {
-	port1.value|= LFsensor | RFsensor|LMsensor| RMsensor|bumperA|bumperB; //set pins for input
+	port1.value|= LFsensor|RFsensor|LMsensor|RMsensor|bumperA|bumperB; //set pins for input
 	port2.value=255;//RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH; (same but longer)
 	port1.writeall();
 	port2.writeall();
@@ -64,7 +64,7 @@ void Behaviour::dostate()
 		case 3:
 			findline(RIGHT); break;
 		case 4: //PressLED
-			pressLED(); break;
+			flashLED(RELOAD); break;
 		case 5:
 			junctionTostand(); break;
 		case 6:
@@ -88,7 +88,7 @@ void Behaviour::dostate()
 		case 14:
 			depositMedal(); break;
 		case 15:
-			standTojunction(); break;
+			standTojunction(); break; //really just backwards junct2junct
 		case 16:
 			removeLED(); break;
 		case 17:
@@ -104,7 +104,7 @@ void Behaviour::dostate()
 	StateFile.close();
 }
 
-void advance(bool dir,int time,int speed)
+void Behaviour::advance(bool dir,int time,int speed)
 {
 	LMotor.setdir(dir)
 	RMotor.setdir(dir)
@@ -132,10 +132,15 @@ void Behaviour::swapsides()
 	LMotor.setspeed(0);
 	RMotor.setspeed(FASTSPEED);
 	delay(3000);
-	LMotor.setspeed(0);
-	RMotor.setspeed(0);		
+	stop();
 	state++;
 }
+
+void Behaviour::stop();
+{
+	LMotor.setspeed(0);
+	RMotor.setspeed(0);		
+}	
 
 void Behaviour::findline(RIGHT)
 {
@@ -175,10 +180,7 @@ void Behaviour::findline(RIGHT)
 			poll();
 		}	
 	}
-	LMotor.setdir(true);
-	LMotor.setspeed(0);
-	RMotor.setdir(true);
-	RMotor.setspeed(0);
+	stop();
 	state++;
 	
 }
@@ -385,31 +387,15 @@ void Behaviour::depositMedal()
 	}
 }
 
-void Behaviour::pressLED()
+void Behaviour::flashLED(int LED)
 {
-	RMotor.setspeed(0);
-	LMotor.setspeed(0);
-	cout << "STOP" << endl;
-	cout << "Flashing press LED." << endl;
-	port2.value &= ~RELOAD;
+	cout << "Flashing LED: " << LED << endl;
+	port2.value &= ~LED;
 	port2.writeall();
 	delay(100);
-	port2.value |= RELOAD;
+	port2.value |= LED;
 	port2.writeall();
 	delay(5000);
-	state++;
-		
-
-}
-
-void Behaviour::removeLED()
-{
-	cout << "Flashing remove LED." << endl;
-	port2.value &= ~REMOVE;
-	port2.writeall();
-	delay(100);
-	port2.value |= REMOVE;
-	port2.writeall();
 	state++;
 }
 
@@ -532,18 +518,7 @@ void Behaviour::collectMedal()
 }
 void Behaviour::standTojunction()
 {
-	junctionTojunction(false);
-/*		if(medals[4] == 0)
-		{
-			state = 4;
-		}
-		else
-		{
-			state++;
-		}*/
-		
-	
-		
+	junctionTojunction(false);		
 }
 void Behaviour::querymedals()
 {

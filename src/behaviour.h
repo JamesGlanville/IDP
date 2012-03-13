@@ -24,7 +24,8 @@ private:
   public:
 	void followWall(int linestocross);
 	void findline (int dir);
-	void advance(ool dir,int time,int speed);
+	void advance(bool dir,int time,int speed);
+	void stop();
 
 	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.

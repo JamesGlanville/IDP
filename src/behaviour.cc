@@ -127,9 +127,14 @@ void Behaviour::swapsides()
 	{
 		poll();
 	}
-	
-		
+	followWall(0); // traverse side wall, stop when we touch the line.
 
+	LMotor.setspeed(0);
+	RMotor.setspeed(FASTSPEED);
+	delay(3000);
+	LMotor.setspeed(0);
+	RMotor.setspeed(0);		
+	state++;
 }
 
 void Behaviour::findline(RIGHT)

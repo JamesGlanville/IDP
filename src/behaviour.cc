@@ -7,7 +7,7 @@ using namespace std;
 
 Behaviour::Behaviour() //init stuff
 {
-	port1.value= LFsensor | RFsensor|LMsensor| RMsensor; //set pins for input
+	//port1.value= LFsensor | RFsensor|LMsensor| RMsensor|bumperA|bumperB; //set pins for input
 	//port1.value=255; //Needs fixing from above.
 	port1.writeall();
 	Comms.sendcommand(RAMP_TIME,RAMPT);
@@ -16,12 +16,17 @@ Behaviour::Behaviour() //init stuff
 	
 	
 	//All output pins high by default, inputs need to be set high before reads:
-	port2.value=255;//RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH; (same but longer)
 	port2.writeall();
+	for (int i; i<5; i++) {medals[i]=0;}
+	traversingjunction = false;
 }
 
 void Behaviour::poll()
 {
+	port1.value|= LFsensor | RFsensor|LMsensor| RMsensor|bumperA|bumperB; //set pins for input
+	port2.value=255;//RELOAD|REMOVE|TURNMOT|BMEDAL|SMEDAL|GMEDAL| TURNSWITCH|PRESSSWITCH; (same but longer)
+	port1.writeall();
+	port2.writeall();
 	port1.readall();
 	port2.readall();
 	distancesense.getvalue();
@@ -190,16 +195,25 @@ void Behaviour::rotateOnJunction(int dir) // We need to move forward first
 }
 void Behaviour::pressSideToPodiumSide()
 {
+	LMotor.setdir(true);
+	RMotor.setdir(true);
+	LMotor.setspeed(FASTSPEED);
+	RMotor.setspeed(FASTSPEED);
+	delay(1000);
 	rotateOnJunction(LEFT);
 	//We should now be on the curved line, pointing slightly to the wall.
 ///	here's a float: distance.getdistance();
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	if(((port1.value & LFsensor)==0) && ((port1.value & RFsensor)==0))
+	LMotor.setspeed(FASTSPEED);
+	RMotor.setspeed(FASTSPEED);
+	delay(2000);
+	
+	while(((port1.value & LFsensor)==0) && ((port1.value & RFsensor)==0))
 	{
 		RMotor.setspeed(92);
 		
-		if (distancesense.getdistance() >= 10.0)
+		if (distancesense.getdistance() >= 15.0)
 		{
 			LMotor.setspeed(FASTSPEED);
 		}
@@ -207,20 +221,22 @@ void Behaviour::pressSideToPodiumSide()
 		{
 			LMotor.setspeed(SLOWSPEED);
 		}
+		poll();
 	}
 	
-	else
-	{
-		LMotor.setspeed(SLOWSPEED);
-		RMotor.setspeed(FASTSPEED);
-		delay(TURNWAIT);
-		state++;	// Hopefully we're in a good enough position to just trust 
+
+	LMotor.setspeed(0);
+	RMotor.setspeed(FASTSPEED);
+	delay(3000);
+	LMotor.setspeed(0);
+	RMotor.setspeed(0);		
+	state++;	// Hopefully we're in a good enough position to just trust 
 					// junctionTojunction to work. Ideally we want to change
 					// the use here of TURNWAIT to a value where we are going
 					// as parallel as possible to the line, but will hit it 
 					// a bit before we need to do anything, so junctiontojunction
 					// will straighten up. This probably won't work as written here.
-	}
+	
 	
 }
 void Behaviour::depositMedal()
@@ -322,6 +338,7 @@ void Behaviour::junctionTojunction(bool dir)
 		//need to advance until one sensor gets over line, then use opposite of normal algo.
 		LMotor.setspeed(127);
 		RMotor.setspeed(127);
+		//delay(200);
 		traversingjunction = true;		
 	}
 	Comms.sendcommand(RAMP_TIME,ramp);
@@ -369,13 +386,14 @@ void Behaviour::junctionTostand()
 }
 void Behaviour::collectMedal()
 {
-	for(int i=0;i<4;i++) //Finds lowest index to store new medal type in, when last one is filled new state will begin.
+	for(int i=0;i<5;i++) //Finds lowest index to store new medal type in, when last one is filled new state will begin.
 	{
 		if (medals[i] == 0)
 		{
 			medals[i]=mech.collectMedal(); break;
 		}
 	}
+	cout << "Medals collected: " << medals[0] << " " << medals[1] << " " << medals[2] << " " << medals[3] << " " << medals[4] << endl;
 	state++;
 }
 void Behaviour::standTojunction()

@@ -28,6 +28,7 @@ private:
 	//void findJunctionCenter	//This would be useful for the same reason.
 	void advance(bool dir,int time,int speed);
 	void stop();
+	void swapsides();
 
 	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.
@@ -37,8 +38,7 @@ private:
 	void checkstate();
 	void dostate();
 	void junctionTojunction(bool dir);
-	void pressLED();
-	void removeLED();
+	void flashLED(int LED);
 	void junctionTostand(); // RACE CONDITION - speed being changed multiple times
 							//so actual speed will vary depending on how long stuff takes.
 							// FIX.

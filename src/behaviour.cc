@@ -83,7 +83,7 @@ void Behaviour::dostate()
 		case 15:
 			standTojunction(); break; //really just backwards junct2junct
 		case 16:
-			removeLED(); break;
+			flashLED(REMOVE); break;
 		case 17:
 			isMedalTypeDone(); break;
 		case 18:
@@ -99,8 +99,8 @@ void Behaviour::dostate()
 
 void Behaviour::advance(bool dir,int time,int speed)
 {
-	LMotor.setdir(dir)
-	RMotor.setdir(dir)
+	LMotor.setdir(dir);
+	RMotor.setdir(dir);
 	LMotor.setspeed(speed);
 	RMotor.setspeed(speed);
 	if (time == 0) { return;} // 0 means we don't stop
@@ -129,13 +129,13 @@ void Behaviour::swapsides()
 	state++;
 }
 
-void Behaviour::stop();
+void Behaviour::stop()
 {
 	LMotor.setspeed(0);
 	RMotor.setspeed(0);		
 }	
 
-void Behaviour::findline(RIGHT)
+void Behaviour::findline(int dir)
 {
 	if (dir == LEFT)
 	{
@@ -348,7 +348,7 @@ void Behaviour::followWall(int linestocross)
 		
 		if ((port1.value & LFsensor) != 0 )
 		{
-			if (watch.read <= msToWait)
+			if (watch.read() <= msToWait)
 			{
 				//watch.start();
 				cout << "Repeated reading." << endl;

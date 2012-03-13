@@ -81,7 +81,7 @@ void Behaviour::dostate()
 		case 14:
 			depositMedal(); break;
 		case 15:
-			standTojunction(); break; //really just backwards junct2junct
+			standTojunction(); break;
 		case 16:
 			flashLED(REMOVE); break;
 		case 17:
@@ -92,6 +92,10 @@ void Behaviour::dostate()
 			areMedalsDone(); /*break;
 		case 20:
 			break; *///We need to go back to the start box.
+			junctionTojunction(true);
+			rotateOnJunction(LEFT,0);
+			followWall(1);
+			break;
 	}
 	StateFile << state;
 	StateFile.close();
@@ -115,6 +119,7 @@ void Behaviour::swapsides()
 								//at the middle of the side wall.
 	findline(LEFT,0);
 	advance(FORWARDS,0,FASTSPEED);
+	cout << "Looking for wall." << endl;
 	while (distancesense.getdistance() >= 15.0) //We want to start followWall
 												//somewhere it can deal with.
 	{

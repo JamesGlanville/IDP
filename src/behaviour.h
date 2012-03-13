@@ -23,13 +23,11 @@ private:
 	void isMedalTypeDone();
   public:
 	void followWall(int linestocross);
-	void findline (int dir,int delaytime); 	//we want additional argument "time to ignore"
-								//so we can get rid of rotateonjunction
-	//void findJunctionCenter	//This would be useful for the same reason.
+	void findline (int dir,int delaytime);
 	void advance(bool dir,int time,int speed);
 	void stop();
 	void swapsides();
-	void getToCentre();
+	void getToCentre(); //If we're on a line, advance to the axis of rotation is on the cross.
 
 	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.

@@ -23,7 +23,9 @@ private:
 	void isMedalTypeDone();
   public:
 	void followWall(int linestocross);
-	void findline (int dir);
+	void findline (int dir); 	//we want additional argument "time to ignore"
+								//so we can get rid of rotateonjunction
+	//void findJunctionCenter	//This would be useful for the same reason.
 	void advance(bool dir,int time,int speed);
 	void stop();
 
@@ -37,11 +39,13 @@ private:
 	void junctionTojunction(bool dir);
 	void pressLED();
 	void removeLED();
-	void junctionTostand();
+	void junctionTostand(); // RACE CONDITION - speed being changed multiple times
+							//so actual speed will vary depending on how long stuff takes.
+							// FIX.
 	void collectMedal();
-	void standTojunction();
-	void pressSideToPodiumSide();
-	void rotateOnJunction(int dir);
+	void standTojunction(); 
+	void pressSideToPodiumSide(); //Deprecated.
+	void rotateOnJunction(int dir); //Will be soon.
 	void depositMedal();
 	Behaviour();
 

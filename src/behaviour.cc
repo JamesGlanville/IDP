@@ -49,7 +49,8 @@ void Behaviour::dostate()
 		case 3:
 			junctionTojunction(true); break;	*/
 		case 1:
-			followWall(1); break;
+			followWall(1); break;	//The stopwatch code won't detect lines for 3000ms, 
+									//so here we don't count the line of the start box.
 		case 2:
 			advance(FORWARDS,100,30);	//forwards for 100ms at 30, so findline isn't already
 										//on a line
@@ -104,8 +105,7 @@ void Behaviour::advance(bool dir,int time,int speed)
 	RMotor.setspeed(speed);
 	if (time == 0) { return;} // 0 means we don't stop
 	delay(time);
-	LMotor.setspeed(0);
-	RMotor.setspeed(0);	
+	stop();
 }
 
 void Behaviour::swapsides()
@@ -115,7 +115,8 @@ void Behaviour::swapsides()
 								//at the middle of the side wall.
 	findline(LEFT);
 	advance(FORWARDS,0,FASTSPEED);
-	while (distancesense.getdistance() >= 15.0)
+	while (distancesense.getdistance() >= 15.0) //We want to start followWall
+												//somewhere it can deal with.
 	{
 		poll();
 	}

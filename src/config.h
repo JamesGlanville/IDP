@@ -62,6 +62,10 @@ const int InitialAdvanceDelay = 20; //Initial turntable advance delay to get off
 
 #define LEFT 0 //Really anticlockwise when viewed from top.
 #define RIGHT 1
+#define FORWARDS true
+#define BACKWARDS false
+
+#define SIDECLEARANCE 15.0
 
 #define TURNWAIT 1000
 

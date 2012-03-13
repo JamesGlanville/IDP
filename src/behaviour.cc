@@ -59,7 +59,10 @@ void Behaviour::dostate()
 		case 1:
 			followWall(1); break;
 		case 2:
-			state +=2; break; // jmp
+			advance(FORWARDS,100,30);	//forwards for 100ms at 30, so findline isn't already
+										//on a line
+		case 3:
+			findline(RIGHT); break;
 		case 4: //PressLED
 			pressLED(); break;
 		case 5:
@@ -73,7 +76,8 @@ void Behaviour::dostate()
 		case 9:
 			flashTypeLEDs(); break;
 		case 10:
-			pressSideToPodiumSide(); break;
+			swapsides(); break;
+//			pressSideToPodiumSide(); break;
 		case 11:
 			junctionTojunction(true); break;
 		case 12:
@@ -99,6 +103,81 @@ void Behaviour::dostate()
 	StateFile << state;
 	StateFile.close();
 }
+
+void advance(bool dir,int time,int speed)
+{
+	LMotor.setdir(dir)
+	RMotor.setdir(dir)
+	LMotor.setspeed(speed);
+	RMotor.setspeed(speed);
+	if (time == 0) { return;} // 0 means we don't stop
+	delay(time);
+	LMotor.setspeed(0);
+	RMotor.setspeed(0);	
+}
+
+void Behaviour::swapsides()
+{
+	advance(FORWARDS,200,50);	//200ms at 50, want to tweak this so
+								//findline gets to be roughly pointing 
+								//at the middle of the side wall.
+	findline(LEFT);
+	advance(FORWARDS,0,FASTSPEED);
+	while (distancesense.getdistance() >= 15.0)
+	{
+		poll();
+	}
+	
+		
+
+}
+
+void Behaviour::findline(RIGHT)
+{
+	if (dir == LEFT)
+	{
+		LMotor.setdir(false);	LMotor.setspeed(FASTSPEED);
+		RMotor.setdir(true);	RMotor.setspeed(FASTSPEED);
+	}
+	else
+	{
+		LMotor.setdir(true);	LMotor.setspeed(FASTSPEED);
+		RMotor.setdir(false);	RMotor.setspeed(FASTSPEED);
+	}	
+	if (dir == LEFT)
+	{
+		while ((port1.value & LFsensor) == 0)
+		{
+			poll();
+		}
+		while ((port1.value & LFsensor) != 0)
+		{
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(SLOWSPEED);
+			poll();
+		}	
+	}
+	if (dir == RIGHT)
+	{
+		while ((port1.value & RFsensor) == 0)
+		{
+			poll();
+		}
+		while ((port1.value & RFsensor) != 0)
+		{
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(SLOWSPEED);
+			poll();
+		}	
+	}
+	LMotor.setdir(true);
+	LMotor.setspeed(0);
+	RMotor.setdir(true);
+	RMotor.setspeed(0);
+	state++;
+	
+}
+
 
 void Behaviour::areMedalsDone()
 {
@@ -218,7 +297,7 @@ void Behaviour::pressSideToPodiumSide()
 	{
 		RMotor.setspeed(92);
 		
-		if (distancesense.getdistance() >= 15.0)
+		if (distancesense.getdistance() >= SIDECLEARANCE)
 		{
 			LMotor.setspeed(FASTSPEED);
 		}

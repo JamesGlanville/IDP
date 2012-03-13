@@ -23,6 +23,8 @@ private:
 	void isMedalTypeDone();
   public:
 	void followWall(int linestocross);
+	void findline (int dir);
+	void advance(ool dir,int time,int speed);
 
 	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.

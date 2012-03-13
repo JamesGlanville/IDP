@@ -8,18 +8,11 @@ using namespace std;
 
 Behaviour::Behaviour() //init stuff
 {
-	//port1.value= LFsensor | RFsensor|LMsensor| RMsensor|bumperA|bumperB; //set pins for input
-	//port1.value=255; //Needs fixing from above.
-	//port1.writeall();
-	Comms.sendcommand(RAMP_TIME,RAMPT);
-	
-	state=1; //Start state machine at beginning. (This should really load past state from file.)
-	
-	
-	//All output pins high by default, inputs need to be set high before reads:
-	port2.writeall();
-	for (int i; i<5; i++) {medals[i]=0;}
-	traversingjunction = false;
+	Comms.sendcommand(RAMP_TIME,RAMPT);	
+	//state=1; (We load past state from file now)
+
+	for (int i; i<5; i++) {medals[i]=0;} // I think this is pointless.
+	traversingjunction = false; // likewise.
 }
 
 void Behaviour::poll()
@@ -39,7 +32,6 @@ void Behaviour::checkstate()
 {
     //Open state file for input and read state
     StateFile.open("state",ios::in);
-//	cout << StateFile << endl;
     StateFile >> state; 
     StateFile.close();
 }
@@ -209,11 +201,12 @@ void Behaviour::isMedalTypeDone()
 }
 
 void Behaviour::rotateOnJunction(int dir) // We need to move forward first
+		//This should really be split into a "findJunctionCenter" and then a
+		//findline, which in itself should take as an argument a delay.
 {
+	stop(); // Pretty sure we don't need this.
 	LMotor.setdir(true);
-	LMotor.setspeed(0);
 	RMotor.setdir(true);
-	RMotor.setspeed(0);	
 	delay(3000);
 	while ((((port1.value & LMsensor) == 0) || ((port1.value & RMsensor) == 0)))
 	{
@@ -284,7 +277,7 @@ void Behaviour::rotateOnJunction(int dir) // We need to move forward first
 	state++;
 
 }
-void Behaviour::pressSideToPodiumSide()
+void Behaviour::pressSideToPodiumSide() // DEPRECATED in favour of swapsides.
 {
 	LMotor.setdir(true);
 	RMotor.setdir(true);
@@ -339,7 +332,6 @@ void Behaviour::followWall(int linestocross)
 	LMotor.setdir(true);
 	RMotor.setdir(true);
 	
-	
 	while(linestocross > -1)
 	{
 		RMotor.setspeed(92);
@@ -370,9 +362,7 @@ void Behaviour::followWall(int linestocross)
 		poll();
 	}
 	
-
-	LMotor.setspeed(0);
-	RMotor.setspeed(0);		
+	stop();	
 	state++;	
 }
 void Behaviour::depositMedal()
@@ -479,8 +469,7 @@ void Behaviour::junctionTostand()
 	if(((port1.value & bumperA) != 0) && ((port1.value & bumperB) != 0))
 	{
 		cout << "At Stand" << endl;
-		RMotor.setspeed(0);
-		LMotor.setspeed(0);
+		stop();
 		state++;
 		return;
 	}

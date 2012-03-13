@@ -55,7 +55,7 @@ void Behaviour::dostate()
 			advance(FORWARDS,100,30);	//forwards for 100ms at 30, so findline isn't already
 										//on a line
 		case 3:
-			findline(RIGHT); break;
+			findline(RIGHT,0); break;
 		case 4: //PressLED
 			flashLED(RELOAD); break;
 		case 5:
@@ -74,7 +74,7 @@ void Behaviour::dostate()
 		case 11:
 			junctionTojunction(true); break;
 		case 12:
-			rotateOnJunction(LEFT); break;
+			rotateOnJunction(LEFT,TURNWAIT); break;
 			standtype++; //If we haven't been to a stand yet, set to 1
 		case 13:
 			junctionTostand(); break;
@@ -87,7 +87,7 @@ void Behaviour::dostate()
 		case 17:
 			isMedalTypeDone(); break;
 		case 18:
-			rotateOnJunction(RIGHT); break;
+			rotateOnJunction(RIGHT,TURNWAIT); break;
 		case 19:
 			areMedalsDone(); /*break;
 		case 20:
@@ -113,7 +113,7 @@ void Behaviour::swapsides()
 	advance(FORWARDS,200,50);	//200ms at 50, want to tweak this so
 								//findline gets to be roughly pointing 
 								//at the middle of the side wall.
-	findline(LEFT);
+	findline(LEFT,0);
 	advance(FORWARDS,0,FASTSPEED);
 	while (distancesense.getdistance() >= 15.0) //We want to start followWall
 												//somewhere it can deal with.
@@ -135,7 +135,7 @@ void Behaviour::stop()
 	RMotor.setspeed(0);		
 }	
 
-void Behaviour::findline(int dir)
+void Behaviour::findline(int dir,int delaytime)
 {
 	if (dir == LEFT)
 	{
@@ -147,6 +147,8 @@ void Behaviour::findline(int dir)
 		LMotor.setdir(true);	LMotor.setspeed(FASTSPEED);
 		RMotor.setdir(false);	RMotor.setspeed(FASTSPEED);
 	}	
+	delay(delaytime); //not checking sensors
+	poll(); //Just to make sure we've got values newer than before the delay.
 	if (dir == LEFT)
 	{
 		while ((port1.value & LFsensor) == 0)
@@ -201,6 +203,41 @@ void Behaviour::isMedalTypeDone()
 	else {state=13;}
 }
 
+void Behaviour::getToCentre()
+{
+	while ((((port1.value & LMsensor) == 0) || ((port1.value & RMsensor) == 0)))
+	{
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+		{	
+			cout << "Straight ahead" << endl;
+			LMotor.setspeed(127);
+			RMotor.setspeed(127);
+		}
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+		{
+			cout << "Turn right" << endl;
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(FASTSPEED);
+		}
+		if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+		{
+			cout << "Turn left" << endl;
+			LMotor.setspeed(FASTSPEED);
+			RMotor.setspeed(SLOWSPEED);
+		}	
+		
+		poll();
+	}
+	stop();
+}
+
+void Behaviour::rotateOnJunction(int dir, int delay)
+{
+	getToCentre();
+	findline(dir,delay);
+}
+
+/*
 void Behaviour::rotateOnJunction(int dir) // We need to move forward first
 		//This should really be split into a "findJunctionCenter" and then a
 		//findline, which in itself should take as an argument a delay.
@@ -208,7 +245,7 @@ void Behaviour::rotateOnJunction(int dir) // We need to move forward first
 	stop(); // Pretty sure we don't need this.
 	LMotor.setdir(true);
 	RMotor.setdir(true);
-	delay(3000);
+	delay(3000); ////????? This feels like it would break linefollowing?
 	while ((((port1.value & LMsensor) == 0) || ((port1.value & RMsensor) == 0)))
 	{
 		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
@@ -277,7 +314,9 @@ void Behaviour::rotateOnJunction(int dir) // We need to move forward first
 	RMotor.setspeed(0);
 	state++;
 
-}
+}*/
+
+/*
 void Behaviour::pressSideToPodiumSide() // DEPRECATED in favour of swapsides.
 {
 	LMotor.setdir(true);
@@ -323,7 +362,7 @@ void Behaviour::pressSideToPodiumSide() // DEPRECATED in favour of swapsides.
 					// will straighten up. This probably won't work as written here.
 	
 	
-}
+}*/
 
 void Behaviour::followWall(int linestocross)
 {
@@ -386,7 +425,7 @@ void Behaviour::flashLED(int LED)
 	delay(100);
 	port2.value |= LED;
 	port2.writeall();
-	delay(5000);
+	//delay(5000); // We don't need to wait here.
 	state++;
 }
 
@@ -458,7 +497,6 @@ void Behaviour::junctionTojunction(bool dir)
 
 void Behaviour::junctionTostand()
 {
-	bool atStand = false;
 	LMotor.setdir(true);
 	RMotor.setdir(true);
 

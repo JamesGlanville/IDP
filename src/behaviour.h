@@ -23,12 +23,13 @@ private:
 	void isMedalTypeDone();
   public:
 	void followWall(int linestocross);
-	void findline (int dir); 	//we want additional argument "time to ignore"
+	void findline (int dir,int delaytime); 	//we want additional argument "time to ignore"
 								//so we can get rid of rotateonjunction
 	//void findJunctionCenter	//This would be useful for the same reason.
 	void advance(bool dir,int time,int speed);
 	void stop();
 	void swapsides();
+	void getToCentre();
 
 	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.
@@ -44,8 +45,8 @@ private:
 							// FIX.
 	void collectMedal();
 	void standTojunction(); 
-	void pressSideToPodiumSide(); //Deprecated.
-	void rotateOnJunction(int dir); //Will be soon.
+	//void pressSideToPodiumSide(); //Deprecated.
+	void rotateOnJunction(int dir,int delay); 
 	void depositMedal();
 	Behaviour();
 

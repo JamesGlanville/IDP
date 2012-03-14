@@ -52,10 +52,10 @@ void Behaviour::dostate()
 			followWall(1); break;	//The stopwatch code won't detect lines for 3000ms, 
 									//so here we don't count the line of the start box.
 		case 2:
-			advance(FORWARDS,100,30);	//forwards for 100ms at 30, so findline isn't already
+			advance(FORWARDS,1400,FASTSPEED);	//forwards for 100ms at 30, so findline isn't already
 										//on a line
 		case 3:
-			findline(LEFT,0); break; //We're on the right side of the line.
+			findline(LEFT,100); break; //We're on the right side of the line.
 		case 4: //PressLED
 			flashLED(RELOAD); break;
 		case 5:
@@ -114,10 +114,10 @@ void Behaviour::advance(bool dir,int time,int speed)
 
 void Behaviour::swapsides()
 {
-	advance(FORWARDS,800,FASTSPEED);	//200ms at 50, want to tweak this so
+	advance(FORWARDS,2500,FASTSPEED);	//200ms at 50, want to tweak this so
 								//findline gets to be roughly pointing 
 								//at the middle of the side wall.
-	findline(LEFT,0);
+	findline(LEFT,1000);
 	advance(FORWARDS,0,FASTSPEED);
 	cout << "Looking for wall." << endl;
 	while (distancesense.getdistance() >= 15.0) //We want to start followWall
@@ -160,12 +160,13 @@ void Behaviour::findline(int dir,int delaytime)
 		{
 			poll();
 		}
-		while ((port1.value & LFsensor) != 0)
+	/*	while ((port1.value & LFsensor) != 0)
 		{
 			LMotor.setspeed(SLOWSPEED);
 			RMotor.setspeed(SLOWSPEED);
 			poll();
-		}	
+			cout << "one sensor has crossed the line." << endl;
+		}	*/
 	}
 	if (dir == RIGHT)
 	{
@@ -178,6 +179,8 @@ void Behaviour::findline(int dir,int delaytime)
 			LMotor.setspeed(SLOWSPEED);
 			RMotor.setspeed(SLOWSPEED);
 			poll();
+			cout << "one sensor has crossed the line." << endl;
+
 		}	
 	}
 	stop();
@@ -390,7 +393,7 @@ void Behaviour::followWall(int linestocross)
 			LMotor.setspeed(SLOWSPEED);
 		}
 		
-		if ((port1.value & RFsensor) != 0 )
+		if (((port1.value & RFsensor) != 0 ) && ((port1.value & RFsensor) != 0 ))
 		{
 			if (watch.read() <= msToWait)
 			{
@@ -421,6 +424,7 @@ void Behaviour::depositMedal()
 			medals[i]=0;
 		}
 	}
+	state++;
 }
 
 void Behaviour::flashLED(int LED)
@@ -554,36 +558,38 @@ void Behaviour::collectMedal()
 }
 void Behaviour::standTojunction()
 {
+	//junctionTojunction(false);
+	advance(BACKWARDS,800,FASTSPEED);
 	LMotor.setdir(false);
 	RMotor.setdir(false);
-	//junctionTojunction(false);
-	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) != 0))
+
+	poll();
+	while (!(((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) != 0)))
 	{
-		cout << "On junction." << endl;
-		stop();
-		advance(FORWARDS,100,SLOWSPEED); //Hopefully jiggles back off the junction.
-		state++;
-		return;
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+		{
+			cout << "Straight ahead" << endl;
+			LMotor.setspeed(127);
+			RMotor.setspeed(127);
+		}
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+		{
+			cout << "Turn right" << endl;
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(FASTSPEED);
+		}
+		if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+		{
+			cout << "Turn left" << endl;
+			LMotor.setspeed(FASTSPEED);
+			RMotor.setspeed(SLOWSPEED);
+		}
+			cout << "On junction." << endl;
+		poll();
 	}
-	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
-	{
-		cout << "Straight ahead" << endl;
-		LMotor.setspeed(127);
-		RMotor.setspeed(127);
-	}
-	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
-	{
-		cout << "Turn right" << endl;
-		LMotor.setspeed(SLOWSPEED);
-		RMotor.setspeed(FASTSPEED);
-	}
-	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
-	{
-		cout << "Turn left" << endl;
-		LMotor.setspeed(FASTSPEED);
-		RMotor.setspeed(SLOWSPEED);
-	}
-			
+	stop();
+	advance(FORWARDS,300,SLOWSPEED); //Hopefully jiggles back off the junction.
+	state++;
 }
 void Behaviour::querymedals()
 {

@@ -379,7 +379,7 @@ void Behaviour::followWall(int linestocross)
 	watch.start();
 	while(linestocross > -1)
 	{
-		RMotor.setspeed(92);
+		RMotor.setspeed((FASTSPEED+SLOWSPEED)/2);
 		
 		if (distancesense.getdistance() >= 15.0)
 		{

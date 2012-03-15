@@ -67,7 +67,7 @@ const int InitialAdvanceDelay = 1000; //Initial turntable advance delay to get o
 
 #define SIDECLEARANCE 15.0
 
-#define TURNWAIT 1000
+#define TURNWAIT 2500
 
 //int standtypeorder[]={1,2,3}; //1 - bronze, 2 - silver, 3 - gold
 

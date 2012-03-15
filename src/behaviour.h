@@ -23,6 +23,8 @@ private:
 	void isMedalTypeDone();
   public:
 	void followWall(int linestocross);
+	void standTojunctionM();
+
 	void findline (int dir,int delaytime);
 	void advance(bool dir,int time,int speed);
 	void stop();

@@ -11,8 +11,9 @@ Behaviour::Behaviour() //init stuff
 	Comms.sendcommand(RAMP_TIME,RAMPT);	
 	//state=1; (We load past state from file now)
 
-	for (int i; i<5; i++) {medals[i]=0;} // I think this is pointless. // So do I.
+	for (int i; i<5; i++) {medals[i]=1;} // I think this is pointless. // So do I.
 	traversingjunction = false; // likewise. // Well it didn't work without it before
+	standtype = 0;
 	/*while (1)
 	{
 		ldr.getvalue();
@@ -63,7 +64,7 @@ void Behaviour::dostate()
 		case 3:
 			findline(LEFT,0); break; //We're on the right side of the line.
 		case 4: //PressLED
-			flashLED(RELOAD); break;
+			flashLED(RELOAD); delay(10000); break;
 		case 5:
 			junctionTostand(); break;
 		case 6:
@@ -80,20 +81,20 @@ void Behaviour::dostate()
 		case 11:
 			junctionTojunction(true); break;
 		case 12:
-			rotateOnJunction(LEFT,3500); break;
-			standtype++; //If we haven't been to a stand yet, set to 1
+			rotateOnJunction(LEFT,4500);
+			standtype++; break;//If we haven't been to a stand yet, set to 1
 		case 13:
 			junctionTostand(); break;
 		case 14:
 			depositMedal(); break;
 		case 15:
-			standTojunction(); break;
+			standTojunctionM(); break;
 		case 16:
 			flashLED(REMOVE); break;
 		case 17:
 			isMedalTypeDone(); break;
 		case 18:
-			rotateOnJunction(RIGHT,TURNWAIT); break;
+			rotateOnJunction(RIGHT,4500); break;
 		case 19:
 			areMedalsDone(); /*break;
 		case 20:
@@ -120,7 +121,7 @@ void Behaviour::advance(bool dir,int time,int speed)
 
 void Behaviour::swapsides()
 {
-	advance(FORWARDS,3000,FASTSPEED);	//200ms at 50, want to tweak this so
+	advance(FORWARDS,4000,FASTSPEED);	//200ms at 50, want to tweak this so
 								//findline gets to be roughly pointing 
 								//at the middle of the side wall.
 	findline(LEFT,1000);
@@ -431,6 +432,8 @@ void Behaviour::depositMedal()
 {
 	for(int i=0;i<5;i++)
 	{
+		cout << "deposit medal: " << medals[i] << " and standtype: " << standtype << endl;
+
 		if (medals[i] == standtype)
 		{
 			mech.depositMedal(i);
@@ -581,11 +584,15 @@ void Behaviour::junctionTostand()
 	}
 	if(((port1.value & bumperA) == 0) && ((port1.value & bumperB) != 0))
 	{
+		LMotor.setdir(false);
+		LMotor.setspeed(30);
 		RMotor.setspeed(FASTSPEED);
 		return;
 	}
 	if(((port1.value & bumperA) != 0) && ((port1.value & bumperB) == 0))
 	{
+		RMotor.setdir(false);
+		RMotor.setspeed(30);
 		LMotor.setspeed(FASTSPEED);
 		return;
 	}
@@ -621,6 +628,43 @@ void Behaviour::collectMedal()
 	cout << "Medals collected: " << medals[0] << " " << medals[1] << " " << medals[2] << " " << medals[3] << " " << medals[4] << endl;
 	state++;
 }
+
+void Behaviour::standTojunctionM()
+{
+	//junctionTojunction(false);
+	advance(BACKWARDS,800,FASTSPEED);
+	LMotor.setdir(false);
+	RMotor.setdir(false);
+
+	poll();
+	while (!(((port1.value & LMsensor) != 0) && ((port1.value & RMsensor) != 0)))
+	{
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+		{
+			cout << "Straight ahead" << endl;
+			LMotor.setspeed(127);
+			RMotor.setspeed(127);
+		}
+		if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+		{
+			cout << "Turn right" << endl;
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(FASTSPEED);
+		}
+		if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+		{
+			cout << "Turn left" << endl;
+			LMotor.setspeed(FASTSPEED);
+			RMotor.setspeed(SLOWSPEED);
+		}
+			cout << "On junction." << endl;
+		poll();
+	}
+	stop();
+	advance(FORWARDS,300,SLOWSPEED); //Hopefully jiggles back off the junction.
+	state++;
+}
+
 void Behaviour::standTojunction()
 {
 	//junctionTojunction(false);

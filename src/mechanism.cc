@@ -10,13 +10,12 @@ Mechanism mech;
 
 void Mechanism::advanceTurntable()
 {
-	port2.value = port2.value | TURNMOT;
+	port2.value &= ~TURNMOT;
+	port2.writeall();
 	delay(InitialAdvanceDelay);
-	if((port2.value & TURNSWITCH) != 0)
-	{
-		port2.value = port2.value ^ TURNMOT;
-	}
-	
+	port2.value|= TURNMOT;
+	port2.writeall();
+
 	if(turntablePosition!=5)
 	{
 		turntablePosition++;
@@ -107,9 +106,10 @@ int Mechanism::collectMedal()
 
 void Mechanism::depositMedal(int medal)
 {
-	rotateTurntable(medal);
 	pullerOn();
+	rotateTurntable(medal);
 	pusherOn();
+	delay(1000);
 	pusherOff();
 	pullerOff();
 }

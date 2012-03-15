@@ -16,6 +16,7 @@ void Mechanism::advanceTurntable()
 	{
 		port2.value = port2.value ^ TURNMOT;
 	}
+	
 	if(turntablePosition!=5)
 	{
 		turntablePosition++;
@@ -66,6 +67,7 @@ void Mechanism::pusherOff()
 
 int Mechanism::readMedalType()
 {
+	cout << "LDR value is:" << ldr.value << endl;
 	if(ldr.value < LowerBoundLDR)
 	{
 		return 1;
@@ -81,7 +83,6 @@ int Mechanism::readMedalType()
 
 int Mechanism::collectMedal()
 {
-	advanceTurntable();
 	
 	while(!pressOpen)
 	{
@@ -93,7 +94,13 @@ int Mechanism::collectMedal()
 
 	pullerOn();
 	pullerOff();
-	
+	pullerOn();
+
+	pullerOff();
+	pullerOn();
+	advanceTurntable();
+	delay (500);
+	pullerOff();
 
 	return readMedalType();
 }

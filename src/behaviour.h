@@ -28,7 +28,7 @@ private:
 	void stop();
 	void swapsides();
 	void getToCentre(); //If we're on a line, advance to the axis of rotation is on the cross.
-
+	void othersidetojunct();
 	int ramp;
 	int standtype; //Which stand are we at? 0 if we're not.
 	int state;

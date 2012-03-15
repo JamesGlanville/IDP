@@ -43,8 +43,8 @@ const unsigned int thicknesspin = 2;
 
 //ADC Decision Values
 
-const unsigned int LowerBoundLDR = 100;
-const unsigned int UpperBoundLDR = 200;
+const unsigned int LowerBoundLDR = 169;
+const unsigned int UpperBoundLDR = 180;
 
 //DELAYS
 
@@ -53,7 +53,7 @@ const int PullerOffDelay = 2000;
 const int PusherOnDelay = 2000;
 const int PusherOffDelay = 2000;
 
-const int InitialAdvanceDelay = 20; //Initial turntable advance delay to get off the switch
+const int InitialAdvanceDelay = 1000; //Initial turntable advance delay to get off the switch
 
 #define FASTSPEED 127
 #define SLOWSPEED 64

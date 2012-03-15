@@ -13,6 +13,12 @@ Behaviour::Behaviour() //init stuff
 
 	for (int i; i<5; i++) {medals[i]=0;} // I think this is pointless. // So do I.
 	traversingjunction = false; // likewise. // Well it didn't work without it before
+	/*while (1)
+	{
+		ldr.getvalue();
+		cout << "ldr value " << ldr.value<<endl;
+		delay(100);
+	}*/
 }
 
 void Behaviour::poll()
@@ -74,7 +80,7 @@ void Behaviour::dostate()
 		case 11:
 			junctionTojunction(true); break;
 		case 12:
-			rotateOnJunction(LEFT,TURNWAIT); break;
+			rotateOnJunction(LEFT,3500); break;
 			standtype++; //If we haven't been to a stand yet, set to 1
 		case 13:
 			junctionTostand(); break;
@@ -446,6 +452,48 @@ void Behaviour::flashLED(int LED)
 	state++;
 }
 
+void Behaviour::othersidetojunct()
+{
+	LMotor.setdir(true);
+	RMotor.setdir(true);
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))
+	{
+		cout << "Straight ahead" << endl;
+		LMotor.setspeed(127);
+		RMotor.setspeed(127);
+	}
+	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) != 0))
+
+	{
+		cout << "Turn right" << endl;
+
+
+		
+			LMotor.setspeed(SLOWSPEED);
+			RMotor.setspeed(FASTSPEED);
+		
+	}
+	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) == 0))
+	{
+		cout << "Turn left" << endl;
+		
+			LMotor.setspeed(FASTSPEED);
+			RMotor.setspeed(SLOWSPEED);
+		
+	}
+	
+	if (((port1.value & LFsensor) != 0) && ((port1.value & RFsensor) != 0))
+	{
+		cout << "Hit perp line" << endl;
+		//need to advance until one sensor gets over line, then use opposite of normal algo.
+	//	LMotor.setspeed(127);
+		//RMotor.setspeed(127);
+		//delay(200);
+		//traversingjunction = true;		
+		state++;
+	}
+}
+
 void Behaviour::junctionTojunction(bool dir)
 {
 	if(ramp>=RAMPLESS){ramp-=RAMPLESS;} // every time this gets called, we'll ramp a bit less.
@@ -529,6 +577,16 @@ void Behaviour::junctionTostand()
 		cout << "At Stand" << endl;
 		stop();
 		state++;
+		return;
+	}
+	if(((port1.value & bumperA) == 0) && ((port1.value & bumperB) != 0))
+	{
+		RMotor.setspeed(FASTSPEED);
+		return;
+	}
+	if(((port1.value & bumperA) != 0) && ((port1.value & bumperB) == 0))
+	{
+		LMotor.setspeed(FASTSPEED);
 		return;
 	}
 	if (((port1.value & LFsensor) == 0) && ((port1.value & RFsensor) == 0))

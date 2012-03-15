@@ -55,7 +55,7 @@ void Behaviour::dostate()
 			advance(FORWARDS,1400,FASTSPEED);	//forwards for 100ms at 30, so findline isn't already
 										//on a line
 		case 3:
-			findline(LEFT,100); break; //We're on the right side of the line.
+			findline(LEFT,0); break; //We're on the right side of the line.
 		case 4: //PressLED
 			flashLED(RELOAD); break;
 		case 5:
@@ -114,10 +114,11 @@ void Behaviour::advance(bool dir,int time,int speed)
 
 void Behaviour::swapsides()
 {
-	advance(FORWARDS,2500,FASTSPEED);	//200ms at 50, want to tweak this so
+	advance(FORWARDS,3000,FASTSPEED);	//200ms at 50, want to tweak this so
 								//findline gets to be roughly pointing 
 								//at the middle of the side wall.
 	findline(LEFT,1000);
+	state--;
 	advance(FORWARDS,0,FASTSPEED);
 	cout << "Looking for wall." << endl;
 	while (distancesense.getdistance() >= 15.0) //We want to start followWall
@@ -126,10 +127,13 @@ void Behaviour::swapsides()
 		poll();
 	}
 	followWall(0); // traverse side wall, stop when we touch the line.
+	state--;
 
 	LMotor.setspeed(0);
 	RMotor.setspeed(FASTSPEED);
 	delay(3000);
+	findline(LEFT,0);
+	state--;
 	stop();
 	state++;
 }
@@ -144,16 +148,19 @@ void Behaviour::findline(int dir,int delaytime)
 {
 	if (dir == LEFT)
 	{
-		LMotor.setdir(false);	LMotor.setspeed(FASTSPEED);
-		RMotor.setdir(true);	RMotor.setspeed(FASTSPEED);
+		LMotor.setdir(false);	LMotor.setspeed(SLOWSPEED);
+		RMotor.setdir(true);	RMotor.setspeed(SLOWSPEED);
 	}
 	else
 	{
-		LMotor.setdir(true);	LMotor.setspeed(FASTSPEED);
-		RMotor.setdir(false);	RMotor.setspeed(FASTSPEED);
+		LMotor.setdir(true);	LMotor.setspeed(SLOWSPEED);
+		RMotor.setdir(false);	RMotor.setspeed(SLOWSPEED);
 	}	
-	delay(delaytime); //not checking sensors
-	poll(); //Just to make sure we've got values newer than before the delay.
+	if (delaytime > 0)
+	{
+		delay(delaytime); //not checking sensors
+		poll(); //Just to make sure we've got values newer than before the delay.
+	}
 	if (dir == LEFT)
 	{
 		while ((port1.value & LFsensor) == 0)
@@ -174,14 +181,14 @@ void Behaviour::findline(int dir,int delaytime)
 		{
 			poll();
 		}
-		while ((port1.value & RFsensor) != 0)
+		/*while ((port1.value & RFsensor) != 0)
 		{
 			LMotor.setspeed(SLOWSPEED);
 			RMotor.setspeed(SLOWSPEED);
 			poll();
 			cout << "one sensor has crossed the line." << endl;
 
-		}	
+		}	*/
 	}
 	stop();
 	state++;

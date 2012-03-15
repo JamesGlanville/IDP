@@ -20,8 +20,8 @@ const unsigned int RFsensor = 1;
 const unsigned int LFsensor = 2;
 const unsigned int RMsensor = 4;
 const unsigned int LMsensor = 8;
-const unsigned int actuatorA = 16;
-const unsigned int actuatorB = 32;
+const unsigned int actuatorA = 16; //Puller
+const unsigned int actuatorB = 32; //Pusher
 const unsigned int bumperA = 64;
 const unsigned int bumperB = 128;
 
@@ -48,10 +48,10 @@ const unsigned int UpperBoundLDR = 200;
 
 //DELAYS
 
-const int RaiseClawDelay = 500;
-const int LowerClawDelay = 500;
-const int AdvanceGripperDelay = 500;
-const int RetractGripperDelay = 500;
+const int PullerOnDelay = 3000;
+const int PullerOffDelay = 2000;
+const int PusherOnDelay = 2000;
+const int PusherOffDelay = 2000;
 
 const int InitialAdvanceDelay = 20; //Initial turntable advance delay to get off the switch
 

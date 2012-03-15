@@ -19,15 +19,14 @@ class Mechanism
 
 		void advanceTurntable();
 		void rotateTurntable(int medal);
-		void advanceGripper();
-		void retractGripper();
-
+		void pusherOn();
+		void pusherOff();
+		void pullerOn();
+		void pullerOff();
 	public:
 		int collectMedal();
 		int readMedalType();
-		void raiseClaw();
-		void lowerClaw();
-
+		
 		void depositMedal(int medal);
 };
 

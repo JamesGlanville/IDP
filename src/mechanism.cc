@@ -36,32 +36,32 @@ void Mechanism::rotateTurntable(int select)
 	}
 }
 
-void Mechanism::raiseClaw()
+void Mechanism::pullerOn()
 {
 	port1.value = port1.value | actuatorA; // Turn actuator on
 	port1.writeall();
-	delay(RaiseClawDelay);
+	delay(PullerOnDelay);
 }
 
-void Mechanism::lowerClaw()
+void Mechanism::pullerOff()
 {
 	port1.value = port1.value ^ actuatorA; //Turn actuator off
 	port1.writeall();
-	delay(LowerClawDelay);
+	delay(PullerOffDelay);
 }
 
-void Mechanism::advanceGripper()
+void Mechanism::pusherOn()
 {
 	port1.value = port1.value | actuatorB; //Turn actuator on
 	port1.writeall();
-	delay(AdvanceGripperDelay);
+	delay(PusherOnDelay);
 }
 
-void Mechanism::retractGripper()
+void Mechanism::pusherOff()
 {
 	port1.value = port1.value ^ actuatorB; //Turn actuator off
 	port1.writeall();
-	delay(RetractGripperDelay);
+	delay(PusherOffDelay);
 }
 
 int Mechanism::readMedalType()
@@ -91,10 +91,9 @@ int Mechanism::collectMedal()
 		}
 	}
 
-	raiseClaw();
-	advanceGripper();
-	lowerClaw();
-	retractGripper();
+	pullerOn();
+	pullerOff();
+	
 
 	return readMedalType();
 }
@@ -102,7 +101,9 @@ int Mechanism::collectMedal()
 void Mechanism::depositMedal(int medal)
 {
 	rotateTurntable(medal);
-	advanceGripper();
-	retractGripper();
+	pullerOn();
+	pusherOn();
+	pusherOff();
+	pullerOff();
 }
 

@@ -11,8 +11,8 @@ Behaviour::Behaviour() //init stuff
 	Comms.sendcommand(RAMP_TIME,RAMPT);	
 	//state=1; (We load past state from file now)
 
-	for (int i; i<5; i++) {medals[i]=0;} // I think this is pointless.
-	traversingjunction = false; // likewise.
+	for (int i; i<5; i++) {medals[i]=0;} // I think this is pointless. // So do I.
+	traversingjunction = false; // likewise. // Well it didn't work without it before
 }
 
 void Behaviour::poll()
